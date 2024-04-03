@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Ccc_Test>
+            <version>1.6.0.0.2</version>
+        </Ccc_Test>
+    </modules>
+    <frontend>
+        <routers>
+            <test>
+                <use>standard</use>
+                <args>
+                    <module>Ccc_Test</module>
+                    <frontName>ccc</frontName>
+                </args>
+            </test>
+        </routers>
+    </frontend>
+    <global>
+        <models>
+            <abc>
+                <class>Ccc_Test_Model</class>
+                <resourceModel>test_resource</resourceModel>
+            </abc>
+        </models>
+    </global>
+</config>

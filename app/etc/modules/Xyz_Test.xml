@@ -1,0 +1,11 @@
+<config>
+    <modules>
+        <Xyz_Test>
+            <active>true</active>
+            <codePool>local</codePool>
+            <!-- <depends>
+                <Mage_Catalog />
+            </depends> -->
+        </Xyz_Test>
+    </modules>
+</config>
