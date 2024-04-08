@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
-
 <config>
     <modules>
         <Ccc_Banner>
-            <!-- <version>1.0</version> -->
+            <version>1.0.0.0</version>
         </Ccc_Banner>
     </modules>
     <adminhtml>
@@ -23,14 +22,11 @@
             </banner>
             <banner_resource>
                 <class>Ccc_Banner_Model_Resource</class>
-                <!-- <deprecatedNode>cms_mysql4</deprecatedNode> -->
+                <!-- <deprecatedNode>banner_mysql4</deprecatedNode> -->
                 <entities>
                     <banner>
                         <table>ccc_banner</table>
                     </banner>
-                    <!-- <slider>
-                        <table>ccc_slider</table>
-                    </slider> -->
                 </entities>
             </banner_resource>
         </models>
@@ -39,6 +35,9 @@
                 <setup>
                     <module>Ccc_Banner</module>
                 </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
             </banner_setup>
         </resources>
         <blocks>
@@ -46,5 +45,21 @@
                 <class>Ccc_Banner_Block</class>
             </banner>
         </blocks>
+        <helpers>
+            <banner>
+                <class>Ccc_Banner_Helper</class>
+            </banner>
+        </helpers>
     </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <ccc_banner before="Mage_Adminhtml">Ccc_Banner_Adminhtml</ccc_banner>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 </config>

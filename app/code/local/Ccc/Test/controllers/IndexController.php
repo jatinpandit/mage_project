@@ -6,7 +6,7 @@ class Ccc_Test_IndexController extends Mage_Core_Controller_Front_Action
     {
         echo 456;
         echo "<pre>";
-        $var = Mage::getModel('abc/abc');
+        $var = Mage::getModel('ccc_test/abc');
         var_dump($var);
     }
 }

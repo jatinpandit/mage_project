@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<config>
+    <menu>
+        <banner >
+            <title>Banner</title>
+            <sort_order>90</sort_order>
+            <children>
+                <page >
+                    <title>Banner</title>
+                    <action>adminhtml/banner</action>
+                </page>
+            </children>
+        </banner>
+    </menu>
+</config>

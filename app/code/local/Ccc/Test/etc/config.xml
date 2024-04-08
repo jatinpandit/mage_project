@@ -19,10 +19,10 @@
     </frontend>
     <global>
         <models>
-            <abc>
+            <ccc_test>
                 <class>Ccc_Test_Model</class>
                 <resourceModel>test_resource</resourceModel>
-            </abc>
+            </ccc_test>
         </models>
     </global>
 </config>

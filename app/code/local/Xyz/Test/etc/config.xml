@@ -18,10 +18,10 @@
     </frontend>
     <global>
         <models>
-            <test1>
+            <xyz_test>
                 <class>Xyz_Test_Model</class>
                 <resourceModel>test_resource</resourceModel>
-            </test1>
+            </xyz_test>
         </models>
     </global>
 </config>
