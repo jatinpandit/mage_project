@@ -12,4 +12,23 @@
             </children>
         </banner>
     </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <banner translate="title" module="banner">
+                                        <title>Change?</title>
+                                    </banner>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
 </config>
