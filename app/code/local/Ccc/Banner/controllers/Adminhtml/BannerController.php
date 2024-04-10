@@ -6,12 +6,14 @@ class Ccc_Banner_Adminhtml_BannerController extends Mage_Adminhtml_Controller_Ac
     {
         // load layout, set active menu and breadcrumbs
         $this->loadLayout()
-            ->_setActiveMenu('banner/banner')
-            // ->_addBreadcrumb(Mage::helper('banner')->__('Banner'), Mage::helper('banner')->__('Banner'))
-            // ->_addBreadcrumb(Mage::helper('banner')->__('Manage Banner'), Mage::helper('banner')->__('Manage Banner'))
+        ->_setActiveMenu('banner/banner')
+        // ->_addBreadcrumb(Mage::helper('banner')->__('Banner'), Mage::helper('banner')->__('Banner'))
+        // ->_addBreadcrumb(Mage::helper('banner')->__('Manage Banner'), Mage::helper('banner')->__('Manage Banner'))
         ;
         return $this;
     }
+
+
 
     public function indexAction()
     {
@@ -219,4 +221,21 @@ class Ccc_Banner_Adminhtml_BannerController extends Mage_Adminhtml_Controller_Ac
         $this->_redirect('*/*/');
     }
 
+    protected function _isAllowed()
+    {
+        $aclResource = null;
+        $action = strtolower($this->getRequest()->getActionName());
+        switch ($action) {
+            case 'index':
+                $aclResource = 'banner/page/actions/index';
+                break;
+            case 'addButton':
+                $aclResource = 'banner/page/actions/addButton';
+            case 'show_title':
+                $aclResource = 'banner/page/actions/show_title';
+            case 'show_all':
+                $aclResource = 'banner/page/actions/show_all';
+            }
+        return Mage::getSingleton('admin/session')->isAllowed($aclResource);
+    }
 }

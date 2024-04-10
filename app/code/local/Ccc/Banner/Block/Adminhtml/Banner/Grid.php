@@ -12,21 +12,32 @@ class Ccc_Banner_Block_Adminhtml_Banner_Grid extends Mage_Adminhtml_Block_Widget
 
     protected function _prepareCollection()
     {
-        $collection = Mage::getModel('banner/banner')->getCollection();
-        /* @var $collection Mage_Cms_Model_Mysql4_Block_Collection */
-        $this->setCollection($collection);
-        return parent::_prepareCollection();
+        if(Mage::getSingleton('admin/session')->isAllowed('banner/page/actions/show_all')){
+            $collection = Mage::getModel('banner/banner')->getCollection();
+            /* @var $collection Mage_Cms_Model_Mysql4_Block_Collection */
+            $this->setCollection($collection);
+            return parent::_prepareCollection();
+        } 
+        else{
+            $collection = Mage::getModel('banner/banner')->getCollection();
+            $collection->setOrder('banner_id', 'desc')->setPageSize(5)->load();
+            /* @var $collection Mage_Cms_Model_Mysql4_Block_Collection */
+            $this->setCollection($collection);
+            return parent::_prepareCollection();
+        }  
     }
 
     protected function _prepareColumns()
     {
         $baseUrl = $this->getUrl();
 
-        $this->addColumn('title', array(
-            'header'    => Mage::helper('banner')->__('Title'),
-            'align'     => 'left',
-            'index'     => 'title',
-        ));
+        if(Mage::getSingleton('admin/session')->isAllowed('banner/page/actions/show_title')){
+            $this->addColumn('title', array(
+                'header'    => Mage::helper('banner')->__('Title'),
+                'align'     => 'left',
+                'index'     => 'title',
+            ));
+        }
 
         $this->addColumn('banner_image', array(
             'header'    => Mage::helper('banner')->__('Banner Image'),

@@ -1,11 +1,11 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <config>
     <menu>
-        <banner >
+        <banner translate="title" module="banner">
             <title>Banner</title>
             <sort_order>90</sort_order>
             <children>
-                <page >
+                <page>
                     <title>Banner</title>
                     <action>adminhtml/banner</action>
                 </page>
@@ -16,6 +16,35 @@
         <resources>
             <admin>
                 <children>
+                    <banner translate="title" module="banner">
+                        <title>Banner</title>
+                        <sort_order>90</sort_order>
+                        <children>
+                            <page>
+                                <title>Banner</title>
+                                <!-- <action>adminhtml/banner</action> -->
+                                <children>
+                                    <actions>
+                                        <title>actions</title>
+                                        <children>
+                                            <index>
+                                                <title>index</title>
+                                            </index>
+                                            <addButton>
+                                                <title>addButton</title>
+                                            </addButton>
+                                            <show_title>
+                                                <title>show_title</title>
+                                            </show_title>
+                                            <show_all>
+                                                <title>show_all</title>
+                                            </show_all>
+                                        </children>
+                                    </actions>
+                                </children>
+                            </page>
+                        </children>
+                    </banner>
                     <system>
                         <children>
                             <config>
