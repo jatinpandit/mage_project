@@ -31,13 +31,14 @@ class Ccc_Banner_Block_Adminhtml_Banner_Grid extends Mage_Adminhtml_Block_Widget
     {
         $baseUrl = $this->getUrl();
 
-        if(Mage::getSingleton('admin/session')->isAllowed('banner/page/actions/show_title')){
+        // if(Mage::getSingleton('admin/session')->isAllowed('banner/page/actions/show_title')){
             $this->addColumn('title', array(
                 'header'    => Mage::helper('banner')->__('Title'),
                 'align'     => 'left',
                 'index'     => 'title',
+                'isAllowed' => Mage::getSingleton('admin/session')->isAllowed('banner/page/actions/show_title')
             ));
-        }
+        // }
 
         $this->addColumn('banner_image', array(
             'header'    => Mage::helper('banner')->__('Banner Image'),

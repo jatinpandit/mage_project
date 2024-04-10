@@ -33,6 +33,15 @@
                                             <addButton>
                                                 <title>addButton</title>
                                             </addButton>
+                                            <new>
+                                                <title>new</title>
+                                            </new>
+                                            <edit>
+                                                <title>edit</title>
+                                            </edit>
+                                            <save>
+                                                <title>save</title>
+                                            </save>
                                             <show_title>
                                                 <title>show_title</title>
                                             </show_title>

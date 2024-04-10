@@ -6,14 +6,12 @@ class Ccc_Banner_Adminhtml_BannerController extends Mage_Adminhtml_Controller_Ac
     {
         // load layout, set active menu and breadcrumbs
         $this->loadLayout()
-        ->_setActiveMenu('banner/banner')
-        // ->_addBreadcrumb(Mage::helper('banner')->__('Banner'), Mage::helper('banner')->__('Banner'))
-        // ->_addBreadcrumb(Mage::helper('banner')->__('Manage Banner'), Mage::helper('banner')->__('Manage Banner'))
+            ->_setActiveMenu('banner/banner')
+            // ->_addBreadcrumb(Mage::helper('banner')->__('Banner'), Mage::helper('banner')->__('Banner'))
+            // ->_addBreadcrumb(Mage::helper('banner')->__('Manage Banner'), Mage::helper('banner')->__('Manage Banner'))
         ;
         return $this;
     }
-
-
 
     public function indexAction()
     {
@@ -77,57 +75,9 @@ class Ccc_Banner_Adminhtml_BannerController extends Mage_Adminhtml_Controller_Ac
         $this->renderLayout();
     }
 
-    
-    // public function saveAction()
-    // {
-    //     // check if data sent
-    //     if ($data = $this->getRequest()->getPost()) {
-
-    //         $id = $this->getRequest()->getParam('banner_id');
-    //         $model = Mage::getModel('banner/banner')->load($id);
-    //         if (!$model->getId() && $id) {
-    //             Mage::getSingleton('adminhtml/session')->addError(Mage::helper('banner')->__('This banner no longer exists.'));
-    //             $this->_redirect('*/*/');
-    //             return;
-    //         }
-
-    //         // init model and set data
-
-    //         $model->setData($data);
-
-    //         // try to save it
-    //         try {
-    //             // save the data
-    //             $model->save();
-    //             // display success message
-    //             Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('banner')->__('The banner has been saved.'));
-    //             // clear previously saved data from session
-    //             Mage::getSingleton('adminhtml/session')->setFormData(false);
-
-    //             // check if 'Save and Continue'
-    //             if ($this->getRequest()->getParam('back')) {
-    //                 $this->_redirect('*/*/edit', array('banner_id' => $model->getId()));
-    //                 return;
-    //             }
-    //             // go to grid
-    //             $this->_redirect('*/*/');
-    //             return;
-
-    //         } catch (Exception $e) {
-    //             // display error message
-    //             Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-    //             // save data in session
-    //             Mage::getSingleton('adminhtml/session')->setFormData($data);
-    //             // redirect to edit form
-    //             $this->_redirect('*/*/edit', array('banner_id' => $this->getRequest()->getParam('banner_id')));
-    //             return;
-    //         }
-    //     }
-    //     $this->_redirect('*/*/');
-    // }
     public function saveAction()
     {
-        
+
         // echo 111;die;
         // check if data sent
         if ($data = $this->getRequest()->getPost()) {
@@ -142,7 +92,7 @@ class Ccc_Banner_Adminhtml_BannerController extends Mage_Adminhtml_Controller_Ac
             } else {
                 unset($data[$type]);
             }
-            
+
             $id = $this->getRequest()->getParam('banner_id');
             $model = Mage::getModel('banner/banner')->load($id);
             if (!$model->getId() && $id) {
@@ -154,7 +104,7 @@ class Ccc_Banner_Adminhtml_BannerController extends Mage_Adminhtml_Controller_Ac
             // init model and set data
 
             $model->setData($data);
-            
+
             // try to save it
             try {
                 // save the data
@@ -223,7 +173,7 @@ class Ccc_Banner_Adminhtml_BannerController extends Mage_Adminhtml_Controller_Ac
 
     protected function _isAllowed()
     {
-        $aclResource = null;
+        // $aclResource = null;
         $action = strtolower($this->getRequest()->getActionName());
         switch ($action) {
             case 'index':
@@ -231,11 +181,26 @@ class Ccc_Banner_Adminhtml_BannerController extends Mage_Adminhtml_Controller_Ac
                 break;
             case 'addButton':
                 $aclResource = 'banner/page/actions/addButton';
+                break;
+            case 'new':
+                $aclResource = 'banner/page/actions/new';
+                break;
+            case 'edit':
+                $aclResource = 'banner/page/actions/edit';
+                break;
+            case 'save':
+                $aclResource = 'banner/page/actions/save';
+                break;
             case 'show_title':
                 $aclResource = 'banner/page/actions/show_title';
+                break;
             case 'show_all':
                 $aclResource = 'banner/page/actions/show_all';
-            }
+                break;
+            default:
+                $aclResource = 'banner/banner';
+                break;
+        }
         return Mage::getSingleton('admin/session')->isAllowed($aclResource);
     }
 }
