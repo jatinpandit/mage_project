@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ccc_VendorInventory>
+            <version>1.0.0</version>
+        </Ccc_VendorInventory>
+    </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Ccc_VendorInventory before="Mage_Adminhtml">Ccc_VendorInventory_Adminhtml</Ccc_VendorInventory>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <vendorinventory>
+                    <file>vendorinventory.xml</file>
+                </vendorinventory>
+            </updates>
+        </layout>
+    </adminhtml>
+    <global>
+        <models>
+            <vendorinventory>
+                <class>Ccc_VendorInventory_Model</class>
+                <resourceModel>vendorinventory_resource</resourceModel>
+            </vendorinventory>
+            <vendorinventory_resource>
+                <class>Ccc_VendorInventory_Model_Resource</class>
+                <entities>
+                    <configuration>
+                        <table>ccc_vendorinventory_configuration</table>
+                    </configuration>
+                </entities>
+            </vendorinventory_resource>
+        </models>
+        <resources>
+            <vendorinventory_setup>
+                <setup>
+                    <module>Ccc_VendorInventory</module>
+                </setup>
+                <!-- <connection>
+                    <use>core_setup</use>
+                </connection> -->
+            </vendorinventory_setup>
+        </resources>
+        <blocks>
+            <vendorinventory>
+                <class>Ccc_VendorInventory_Block</class>
+            </vendorinventory>
+        </blocks>
+
+        <helpers>
+            <vendorinventory>
+                <class>Ccc_VendorInventory_Helper</class>
+            </vendorinventory>
+        </helpers>
+    </global>
+</config>

@@ -10,6 +10,7 @@ class Ccc_Banner_Block_Adminhtml_Banner extends Mage_Adminhtml_Block_Widget_Grid
         $this->_addButtonLabel = Mage::helper('banner')->__('Add New Banner');
         // $this->removeButton()
         parent::__construct();
+        $this->setTemplate('banner/grid/container.phtml');
     }
 
     public function _prepareLayout()

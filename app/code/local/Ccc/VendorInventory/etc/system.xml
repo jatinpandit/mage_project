@@ -1,0 +1,20 @@
+<!-- <?xml version="1.0"?>
+<config>
+    <tabs>
+        <vendorinventory translate="label" module="vendorinventory">
+            <label>VendorInventory</label>
+            <sort_order>0</sort_order>
+        </vendorinventory>
+    </tabs>
+    <sections>
+        <vendorinventory translate="label" module="vendorinventory">
+            <label>Configuration</label>
+            <tab>Configuration</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+        </vendorinventory>
+    </sections>
+</config> -->

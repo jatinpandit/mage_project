@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_configuration_index>
+        <reference name="head">
+            <action method="addJs">
+                <script>vendorinventory/vendorinventory.js</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="vendorinventory/adminhtml_configuration" name="configuration_grid"></block>
+        </reference>
+    </adminhtml_configuration_index>
+    <adminhtml_configuration_new>
+        <update handle="adminhtml_configuration_edit" />
+    </adminhtml_configuration_new>
+    <adminhtml_configuration_edit>
+        <update handle="editor" />
+        <reference name="content">
+            <block type="vendorinventory/adminhtml_configuration_edit" name="configuration_edit"></block>
+        </reference>
+    </adminhtml_configuration_edit>
+</layout>

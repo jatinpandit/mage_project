@@ -1,0 +1,21 @@
+<label for="title">Title</label>
+<input type="text" id="bannerGrid_filter_banner" value class="input-text-no-changes" name="title">
+<br><br>
+<!-- <input type="dropdown" id="bannerGrid_filter_banner" name="banner_image"> -->
+<label for="banner_image">Banner Image</label>
+<select name="banner_image" id="bannerGrid_filter_bannerr">
+    <option value="">--Select--</option>
+    <option value="xyz">xyz</option>
+    <option value="banner">banner</option>
+</select>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td style="<?php echo $this->getHeaderWidth() ?>"><?php echo $this->getHeaderHtml() ?></td>
+            <td class="form-buttons"><?php echo $this->getButtonsHtml() ?></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <?php echo $this->getGridHtml() ?>
+</div>
