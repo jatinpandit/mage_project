@@ -6,7 +6,7 @@
             <sort_order>100</sort_order>
                 <children>
                     <configuration>
-                        <title>Configuration</title>
+                        <title>Configuration Screen</title>
                         <action>adminhtml/configuration</action>
                     </configuration>
                     <instock>

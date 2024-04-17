@@ -11,6 +11,59 @@ class Ccc_VendorInventory_Block_Adminhtml_Configuration_Grid extends Mage_Adminh
         $this->setTemplate('vendorinventory/vendorinventory.phtml');
     }
 
+    // protected function getEavModelCollection()
+    // {
+    //     return Mage::getModel('eav/entity_attribute_option')->getCollection()->addFieldtoFilter('attribute_id', 216)->load();
+    // }
+
+    // protected function getBrandNameCollection()
+    // {
+    //     return Mage::getModel('eav/entity_attribute_option_value')->getCollection();
+    // }
+
+    // protected function getBrandName()
+    // {
+    //     $readConnection = Mage::getSingleton('core/resource')->getConnection('core_read');
+    //     $tableNameOptionValue = Mage::getSingleton('core/resource')->getTableName('eav_attribute_option_value');
+    //     $tableNameOption = Mage::getSingleton('core/resource')->getTableName('eav_attribute_option');
+
+    //     $select = $readConnection->select()
+    //         ->from(array('a' => $tableNameOptionValue), array('value'))
+    //         ->join(
+    //             array('t' => $tableNameOption),
+    //             'a.option_id = t.option_id',
+    //             array()
+    //         )
+    //         ->where('t.attribute_id = ?', 216);
+
+    //     $brandNames = $readConnection->fetchCol($select);
+    //     return $brandNames;
+    // }
+
+    // protected function getBrandName()
+    // {
+    //     $adapter = $this->_getReadAdapter();
+    //     // $resource = Mage::getSingleton('core/resource');
+    //     // $readConnection = $resource->getConnection('core_read');
+    //     // $bind    = array(
+    //     //     ':entity_type_code' => $entityType,
+    //     //     ':attribute_code'   => $code
+    //     // );
+
+    //     $select = $adapter->select()
+    //     ->from(array('a' => $this->getTable('eav_attribute_option_value')), array('a.value'))
+    //     ->join(
+    //         array('t' => $this->getTable('eav_attribute_option')),
+    //         'a.option_id = t.option_id',
+    //         array())
+    //     ->where('t.attribute_id = 216 ');
+    //     // ->where('a.attribute_code = :attribute_code');
+
+    //     // $result = $readConnection->fetchOne($select);
+    //     // return $result;
+    //     return $adapter->fetchOne($select);
+    // }
+
     // protected function _prepareCollection()
     // {
     //     $collection = Mage::getModel('vendorinventory/configuration')->getCollection();

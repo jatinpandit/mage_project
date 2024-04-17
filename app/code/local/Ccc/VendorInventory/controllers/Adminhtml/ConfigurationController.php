@@ -16,7 +16,158 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
         $this->renderLayout();
         // echo 123852;   
     }
+    // protected function _validateFormKey()
+    // {
+    //     return true;
+    // }
+    // public function getheadersAction()
+    // {
+    //     $file = $_FILES['file']; // Assuming the file is sent as a form data
+    //     $response = [];
+    //     $response['headers'] = $this->getRequest()->getPost();
+    //         // if ($file['error'] !== UPLOAD_ERR_OK) {
+    //         //     // Handle file upload error
+    //         //     $errorMessage = 'File upload failed with error code: ' . $file['error'];
+    //         //     Mage::log($errorMessage, null, 'file_upload.log');
+    //         //     $this->getResponse()->setHeader('Content-type', 'application/json');
+    //         //     $this->getResponse()->setBody(json_encode(['error' => $errorMessage]));
+    //         //     return;
+    //         // }
 
+    //         // $filePath = $file['tmp_name'];
+    //         // $headers = [];
+
+    //         // if (($handle = fopen($filePath, 'r')) !== false) {
+    //         //     // Read the first row as headers
+    //         //     if (($data = fgetcsv($handle, 1000, ',')) !== false) {
+    //         //         $headers = $data;
+    //         //     }
+    //         //     fclose($handle);
+    //         // } else {
+    //         //     // Handle file open error
+    //         //     $errorMessage = 'Failed to open file: ' . $filePath;
+    //         //     Mage::log($errorMessage, null, 'file_upload.log');
+    //         //     $this->getResponse()->setHeader('Content-type', 'application/json');
+    //         //     $this->getResponse()->setBody(json_encode(['error' => $errorMessage]));
+    //         //     return;
+    //         // }
+
+    //     $this->getResponse()->setHeader('Content-type', 'application/json');
+    //     $this->getResponse()->setBody(json_encode($response));
+    // }
+
+    public function getheadersAction()
+    {
+        $file = $_FILES['file'];
+
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            $errorMessage = 'File upload failed with error code: ' . $file['error'];
+            $this->getResponse()->setHeader('Content-type', 'application/json');
+            $this->getResponse()->setBody(json_encode(['error' => $errorMessage]));
+            return;
+        }
+
+        $filePath = $file['tmp_name'];
+        $headers = [];
+
+        if (!file_exists($filePath)) {
+            $errorMessage = 'Uploaded file does not exist: ' . $filePath;
+            $this->getResponse()->setHeader('Content-type', 'application/json');
+            $this->getResponse()->setBody(json_encode(['error' => $errorMessage]));
+            return;
+        }
+
+        if (($handle = fopen($filePath, 'r')) !== false) {
+            $data = fgetcsv($handle, 1000, ',');
+            if ($data !== false) {
+                $headers = $data;
+            } else {
+                
+                error_log('Failed to parse CSV data from file: ' . $filePath);
+                // Set error response
+                $errorMessage = 'Failed to read CSV data from file: ' . $filePath;
+                $this->getResponse()->setHeader('Content-type', 'application/json');
+                $this->getResponse()->setBody(json_encode(['error' => $errorMessage]));
+                fclose($handle);
+                return;
+            }
+           
+        } else {
+            $errorMessage = 'Failed to open file: ' . $filePath;
+            $this->getResponse()->setHeader('Content-type', 'application/json');
+            $this->getResponse()->setBody(json_encode(['error' => $errorMessage]));
+            return;
+        }
+
+        fclose($handle);
+        // } else {
+        //     $errorMessage = 'Failed to open file: ' . $filePath;
+        //     $this->getResponse()->setHeader('Content-type', 'application/json');
+        //     $this->getResponse()->setBody(json_encode(['error' => $errorMessage]));
+        //     return;
+        // }
+        error_log('Headers: ' . print_r($headers, true));
+
+        $this->getResponse()->setHeader('Content-type', 'application/json');
+        $this->getResponse()->setBody(json_encode(['headers' => $headers]));
+    }
+
+
+
+
+    // public function getheadersAction()
+    // {
+    //     try {
+    //         // Check if a file has been uploaded
+    //         if (!isset($_FILES['file']['tmp_name']) || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+    //             throw new Exception('No file uploaded or invalid file.');
+    //         }
+
+    //         $file = $_FILES['file'];
+    //         $filePath = $file['tmp_name'];
+    //         $headers = [];
+
+    //         if (($handle = fopen($filePath, 'r')) !== false) {
+    //             // Read the first row as headers
+    //             if (($data = fgetcsv($handle, 1000, ',')) !== false) {
+    //                 $headers = $data;
+    //             }
+    //             fclose($handle);
+    //         } else {
+    //             throw new Exception('Failed to open file: ' . $filePath);
+    //         }
+
+    //         $this->getResponse()->setHeader('Content-type', 'application/json');
+    //         $this->getResponse()->setBody(json_encode(['headers' => $headers]));
+    //     } catch (Exception $e) {
+    //         $this->getResponse()->setHeader('Content-type', 'application/json');
+    //         $this->getResponse()->setBody(json_encode(['error' => $e->getMessage()]));
+    //     }
+    // }
+
+
+    // public function getheadersAction()
+    // {
+    //     $file = $this->getRequest()->getParams();
+
+    //     // $fullPath = Mage::getBaseDir('media/import/') . $fileName['fileName'];
+    //     $row = 0;
+    //     if (($handle = fopen($file, 'r')) !== false) {
+    //         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+    //             if (!$row) {
+    //                 $header = $data;
+    //                 $row++;
+    //                 continue;
+    //             }
+    //             $jsonData = array_combine($header, $data);
+    //             $jsonData = json_encode($jsonData);
+    //             Mage::getModel("import/import")->addData("json_data", $jsonData)->save();
+    //         }
+
+
+    //         fclose($handle);
+    //     }
+    // }
     public function newAction()
     {
         // the same form is used to create and edit

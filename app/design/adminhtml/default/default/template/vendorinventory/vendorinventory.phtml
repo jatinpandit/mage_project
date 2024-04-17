@@ -1,1 +1,33 @@
-hello123
+<?php $brandNames = Mage::helper('vendorinventory')->getBrandNames(); ?>
+<?php //var_dump($brandNames); ?>   
+<div id="configuration-container">
+    <select name="brandName" id="brandName">
+        <option value="">Select Brand</option>
+        <?php foreach ($brandNames as $key => $value): ?>
+            <option value="<?php echo $key ?>"><?php echo $value ?></option>
+        <?php endforeach; ?>
+    </select>
+    <div id="file-upload-container">
+        <!-- File upload form will be added here dynamically -->
+    </div>
+    <div class="barnd-table">
+        
+    </div>
+</div>
+
+<!-- <script>
+    document.observe('domloaded',function(){
+    var config = new Configuration('configuration-container'));
+    });
+</script> -->
+<script type="text/javascript">
+    jQuery.noConflict();
+    document.observe('dom:loaded', function () {
+        var options = {
+            url: "<?php echo $this->getUrl('*/*/getheaders'); ?>",
+            containerId: "configuration-container",
+            formKey: "<?php echo $this->getFormKey() ?>"
+        };
+        var config = new Configuration(options);
+    });
+</script>

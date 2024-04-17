@@ -6,7 +6,7 @@ class Ccc_VendorInventory_Block_Adminhtml_Configuration extends Mage_Adminhtml_B
     {
         $this->_blockGroup = 'vendorinventory';
         $this->_controller = 'adminhtml_configuration';
-        $this->_headerText = Mage::helper('vendorinventory')->__('Configuration');
+        $this->_headerText = Mage::helper('vendorinventory')->__('Configuration Screen');
         // $this->_addButtonLabel = Mage::helper('vendorinventory')->__('Add New Configuration');
         parent::__construct();
         $this->removeButton('add');
