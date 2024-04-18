@@ -1,4 +1,4 @@
-jQuery.noConflict();
+var j = jQuery.noConflict();
 
 var Configuration = Class.create({
     initialize: function(options) {
@@ -102,9 +102,9 @@ var Configuration = Class.create({
             var dropdownCell = document.createElement('td');
             var dropdownSelect = document.createElement('select');
             
-            
             headers.forEach(function(header) {
                 var option = document.createElement('option');
+                option.value = header;
                 option.textContent = header;
                 dropdownSelect.appendChild(option);
             });
@@ -115,8 +115,10 @@ var Configuration = Class.create({
     
         var dataTypeCell = document.createElement('td');
         var dataTypeSelect = document.createElement('select');
-        ['Number', 'Date', 'Count', 'Text'].forEach(function(optionText) {
+        var dataTypeOptions = ['Number', 'Date', 'Count', 'Text'];
+        dataTypeOptions.forEach(function(optionText) {
             var option = document.createElement('option');
+            option.value = optionText;
             option.textContent = optionText;
             dataTypeSelect.appendChild(option);
         });
@@ -127,6 +129,7 @@ var Configuration = Class.create({
         var operatorsSelect = document.createElement('select');
         ['=','<', '>','<=','>=','!='].forEach(function(optionText) {
             var option = document.createElement('option');
+            option.value = optionText;
             option.textContent = optionText;
             operatorsSelect.appendChild(option);
         });
@@ -138,7 +141,7 @@ var Configuration = Class.create({
         textBox.setAttribute('type', 'text');
         conditionCell.appendChild(textBox);
         row.appendChild(conditionCell);
-
+    
             var blankCell = document.createElement('td');
             var addButton = document.createElement('button');
             addButton.observe('click', Configuration.prototype.addConditionRow);
@@ -153,7 +156,12 @@ var Configuration = Class.create({
             table.appendChild(row);
             // addButton.observe('click', Configuration.addConditionRow.bind(this));
         });
+        var saveButton = document.createElement('button');
+        saveButton.innerText = 'Save';
+        saveButton.setAttribute('type','button');
+
         parentContainer.appendChild(table);
+        parentContainer.appendChild(saveButton);
     },
 
     // addConditionRow: function(event) {
@@ -164,36 +172,64 @@ var Configuration = Class.create({
     //     var newRow = clickedRow.cloneNode(  );
     //     clickedRow.parentNode.insertBefore(newRow, clickedRow.nextSibling);
     // }
-    addConditionRow: function(event) {
+    addConditionRow : function(event) {
         var clickedButton = event.target;
         var clickedRow = clickedButton.parentNode.parentNode;
+
+        var radioRow = document.createElement('tr');
+        var radioCell = document.createElement('td');
+        radioCell.colSpan = 6;
     
-        
+        var andRadioButton = document.createElement('input');
+        andRadioButton.type = 'radio';
+        andRadioButton.name = 'conditionRadio_' + Date.now();
+        andRadioButton.value = 'AND';
+        var andLabel = document.createElement('label');
+        andLabel.textContent = 'AND';
+        andLabel.htmlFor = 'and-radio-' + Date.now();
+    
+        var orRadioButton = document.createElement('input');
+        orRadioButton.type = 'radio';
+        orRadioButton.name = 'conditionRadio_' + Date.now();
+        orRadioButton.value = 'OR';
+        var orLabel = document.createElement('label');
+        orLabel.textContent = 'OR';
+        orLabel.htmlFor = 'or-radio-' + Date.now;
+    
+        radioCell.appendChild(andRadioButton);
+        radioCell.appendChild(andLabel);
+        radioCell.appendChild(orRadioButton);
+        radioCell.appendChild(orLabel);
+    
+        radioRow.appendChild(radioCell);
+    
+        clickedRow.parentNode.insertBefore(radioRow, clickedRow.nextSibling);
+    
         var newRow = document.createElement('tr');
     
         clickedRow.querySelectorAll('td').forEach(function(cell) {
             var newCell = document.createElement('td');
-            
             newCell.innerHTML = cell.innerHTML;
-    
-            
             newRow.appendChild(newCell);
-
-        var radioRow = document.createElement('tr');
-        var radioCell = document.createElement('td');
-        
-        var radioButtonOr = document.createElement('input');
-        radioButtonOr.setAttribute('type','radio');
-        radioButtonOr.setAttribute('name','conditionRadio');
-        radioButtonOr.setAttribute('value','OR');
-        radioButtonOr.textContent = "OR";
-
-        radioRow.appendChild(radioCell);
-        clickedRow.parentNode.insertBefore(radioRow, clickedRow.nextSibling);
-
         });
+
+        newRow.removeChild(newRow.lastElementChild);
+        
+        var deleteCell = document.createElement('td');
+        var deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete';
+        deleteButton.type = 'button';
+        deleteButton.addEventListener('click', function() {
+
+            newRow.parentNode.removeChild(newRow);
+            radioRow.parentNode.removeChild(radioRow);
+        });
+        deleteCell.appendChild(deleteButton);
     
-        clickedRow.parentNode.insertBefore(newRow, clickedRow.nextSibling);
+        newRow.appendChild(deleteCell);
+    
+        clickedRow.parentNode.insertBefore(newRow, radioRow.nextSibling);
     }
+    
 
 });

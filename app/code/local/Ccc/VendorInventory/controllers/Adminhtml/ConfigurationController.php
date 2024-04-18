@@ -16,10 +16,10 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
         $this->renderLayout();
         // echo 123852;   
     }
-    // protected function _validateFormKey()
-    // {
-    //     return true;
-    // }
+        // protected function _validateFormKey()
+        // {
+        //     return true;
+        // }
     // public function getheadersAction()
     // {
     //     $file = $_FILES['file']; // Assuming the file is sent as a form data
