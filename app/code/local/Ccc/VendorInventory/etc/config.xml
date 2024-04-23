@@ -35,8 +35,11 @@
                 <class>Ccc_VendorInventory_Model_Resource</class>
                 <entities>
                     <configuration>
-                        <table>ccc_vendorinventory_configuration</table>
+                        <table>ccc_vendorinventory_brand_configuration</table>
                     </configuration>
+                    <configuration_column>
+                        <table>ccc_vendorinventory_column_configuration</table>
+                    </configuration_column>
                 </entities>
             </vendorinventory_resource>
         </models>
@@ -45,9 +48,6 @@
                 <setup>
                     <module>Ccc_VendorInventory</module>
                 </setup>
-                <!-- <connection>
-                    <use>core_setup</use>
-                </connection> -->
             </vendorinventory_setup>
         </resources>
         <blocks>

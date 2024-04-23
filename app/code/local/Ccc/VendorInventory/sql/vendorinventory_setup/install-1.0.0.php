@@ -27,71 +27,33 @@ $table = $installer->getConnection()
 $installer->getConnection()->createTable($table);
 
 $table = $installer->getConnection()
-            ->newTable($installer->getTable('ccc_vendorinventory_configuration_rule'))
-            ->addColumn('rule_id', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
+            ->newTable($installer->getTable('ccc_vendorinventory_brand_configuration'))
+            ->addColumn('id', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
                 'identity' => true,
                 'nullable' => false,
                 'primary' => true,
-            ), 'Configuration Rule Id')
-            ->addColumn('part_number', Varien_Db_Ddl_Table::TYPE_VARCHAR, null, array(
+            ), 'Id')
+            ->addColumn('brand_id', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
                 'nullable' => false 
-            ),'Part Number')
-            ->addColumn('part_name', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(
-                'nullable' => false
-            ),'Part Name')
-            ->addColumn('instock_qty', Varien_Db_Ddl_Table::TYPE_NUMERIC, null, array(
-                'nullable' => false
-            ),'Instock Quantity')
-            ->addColumn('restock_date', Varien_Db_Ddl_Table::TYPE_DATE, null, array(
-                'nullable' => false
-            ),'Restock Date')
-            ->addColumn('restock_qty', Varien_Db_Ddl_Table::TYPE_NUMERIC, null, array(
-                'nullable' => false
-            ), 'Restock Quantity')
-            ->addColumn('price', Varien_Db_Ddl_Table::TYPE_NUMERIC, null, array(
-                'nullable' => false
-            ),'Price')
+            ),'Brand Id')
             ->setComment('CCC VendorInventory Configuration Rule Table');
 $installer->getConnection()->createTable($table);
 
 $table = $installer->getConnection()
-            ->newTable($installer->getTable('ccc_vendorinventory_instock_date'))
-            ->addColumn('product_id', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
+            ->newTable($installer->getTable('ccc_vendorinventory_column_configuration'))
+            ->addColumn('id', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
                 'identity' => true,
                 'nullable' => false,
                 'primary' => true,
-            ), 'Product Id')
-            ->addColumn('product_name', Varien_Db_Ddl_Table::TYPE_VARCHAR, null, array(
+            ), 'Id')
+            ->addColumn('brand_table_id', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array( 
                 'nullable' => false 
-            ),'Product Name')
-            ->addColumn('sku', Varien_Db_Ddl_Table::TYPE_VARCHAR, null, array(
-                'nullable' => false 
-            ),'Product SKU')
-            ->addColumn('instock_date', Varien_Db_Ddl_Table::TYPE_DATE, null, array(
-                'nullable' => false 
-            ),'Instock Date')
-            ->addColumn('available_qty', Varien_Db_Ddl_Table::TYPE_NUMERIC, null, array(
-                'nullable' => false 
-            ),'Available Quantity')
-            ->addColumn('next_available_qty', Varien_Db_Ddl_Table::TYPE_NUMERIC, null, array(
-                'nullable' => false 
-            ),'Next Available Quantity')
-            ->addColumn('restock_days', Varien_Db_Ddl_Table::TYPE_NUMERIC, null, array(
-                'nullable' => false 
-            ),'Restock Days')
-            ->addColumn('price', Varien_Db_Ddl_Table::TYPE_NUMERIC, null, array(
-                'nullable' => false 
-            ),'Price')
-            ->addColumn('created_date', Varien_Db_Ddl_Table::TYPE_DATE, null, array(
-                'nullable' => false 
-            ),'Created Date')
-            ->addColumn('ship_date', Varien_Db_Ddl_Table::TYPE_DATE, null, array(
-                'nullable' => false 
-            ),'Ship Date')
-            ->addColumn('product_status', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array(
-                'nullable' => false 
-            ),'Product Status')
-            ->setComment('CCC VendorInventory Product Instock Date Table');
+            ),'Brand Table Id')
+            ->addColumn('brand_column_cofiguration', Varien_Db_Ddl_Table::TYPE_TEXT,300, array(
+                'nullable' => false
+            ),'Brand Coloumn Configuration')
+            ->setComment('CCC VendorInventory Configuration Rule Table');
 $installer->getConnection()->createTable($table);
+
 $installer->endSetup();
 

@@ -5,27 +5,31 @@ var Configuration = Class.create({
         this.containerId = options.containerId;
         this.url = options.url;
         this.formKey = options.formKey;
+        this.saveUrl = options.saveUrl;
         this.bindEvents();
     },
     bindEvents: function() {
         // console.log(this.formKey);   
+        var self = this;
         var brandDropdown = $(this.containerId).down('#brandName');
-        brandDropdown.observe('change', this.loadUploadContainer.bind(this));
+        brandDropdown.observe('change', self.loadUploadContainer.bind(this));
     },
-
+    
     loadUploadContainer: function(event) {
+        var self = this;
         var selectedBrand = event.target.value;
         var fileUploadContainer = $(this.containerId).down('#file-upload-container');
-
+        
         if (selectedBrand) {
             fileUploadContainer.innerHTML = '<input type="file" id="file-upload" name="file" accept=".csv,.xls,xml"><button id="upload-btn">Upload</button>';
-            $('upload-btn').observe('click', this.processFile.bind(this));
+            $('upload-btn').observe('click', self.processFile.bind(this));
         } else {
             fileUploadContainer.innerHTML = '';
         }
     },
-
+    
     processFile: function(event) {
+        var self = this;
         event.preventDefault();
         var fileInput = $('file-upload');
         var file = fileInput.files[0];
@@ -44,14 +48,15 @@ var Configuration = Class.create({
         formData.append('file', file);
         
 
-        this.getHeadersFromCSV(file);
+        self.getHeadersFromCSV(file);
     },
-
+    
     getHeadersFromCSV: function(file) {
+        var self = this;
         var formData = new FormData();
         formData.append('file', file);
         formData.append('form_key', this.formKey);
-
+        
         var xhr = new XMLHttpRequest();
         xhr.open('POST', this.url, true);
         xhr.onreadystatechange = function() {
@@ -60,7 +65,7 @@ var Configuration = Class.create({
                     var response = JSON.parse(xhr.responseText);
                     if (response && response.headers) {
                         // console.log('Headers:', response.headers);
-                        this.createBrandTable(response.headers); 
+                        self.createBrandTable(response.headers); 
                     } else {
                         console.error('Invalid response format:', response);
                     }
@@ -72,8 +77,10 @@ var Configuration = Class.create({
 
         xhr.send(formData);
     },
-
+    
     createBrandTable: function(headers) {
+        var self = this;
+        // console.log(this.saveUrl);
         
         var parentContainer = $(this.containerId);
     
@@ -92,8 +99,9 @@ var Configuration = Class.create({
         table.appendChild(headerRow);
     
         var staticValues = ['sku', 'instock', 'instock qty', 'Restock Date', 'Restock Qty', 'Status', 'Discontinued'];
-        staticValues.forEach(function(value) {
+        staticValues.forEach(function(value, index) {
             var row = document.createElement('tr');
+            row.setAttribute('name', value);
     
             var staticCell = document.createElement('td');
             staticCell.textContent = value;
@@ -144,7 +152,7 @@ var Configuration = Class.create({
     
             var blankCell = document.createElement('td');
             var addButton = document.createElement('button');
-            addButton.observe('click', Configuration.prototype.addConditionRow);
+            addButton.observe('click', self.addConditionRow);
             addButton.innerText = 'Add';
             addButton.setAttribute('type', 'button'); 
             // addButton.setAttribute('value', 'Add'); 
@@ -159,19 +167,12 @@ var Configuration = Class.create({
         var saveButton = document.createElement('button');
         saveButton.innerText = 'Save';
         saveButton.setAttribute('type','button');
-
+        saveButton.onclick=()=>{
+            self.handleSave()};
         parentContainer.appendChild(table);
         parentContainer.appendChild(saveButton);
     },
 
-    // addConditionRow: function(event) {
-    //     var clickedButton = event.target;
-    //     var clickedRow = clickedButton.parentNode.parentNode;
-
-        
-    //     var newRow = clickedRow.cloneNode(  );
-    //     clickedRow.parentNode.insertBefore(newRow, clickedRow.nextSibling);
-    // }
     addConditionRow : function(event) {
         var clickedButton = event.target;
         var clickedRow = clickedButton.parentNode.parentNode;
@@ -229,6 +230,71 @@ var Configuration = Class.create({
         newRow.appendChild(deleteCell);
     
         clickedRow.parentNode.insertBefore(newRow, radioRow.nextSibling);
+    },
+
+    prepareArray: function () {
+        // console.log(123);
+        // var self = this;
+        // console.log(this.saveUrl);
+        var brandId = j('#brandName').val();
+        var configArray = {};
+        configArray[brandId] = {};
+        j("#configuration-container table tr").not(":first").each(function () {
+            var obj = {};
+            var tds = j(this).find("td");
+            var name = j(this).attr('name');
+
+            var brandCol = tds.eq(1).find('select').val();
+
+            obj[brandCol] = [
+                { 'data_type': tds.eq(2).find('select').val() },
+                { 'condition_operator': tds.eq(3).find('select').val() },
+                { 'condition_value': tds.eq(4).find('input').val() }
+            ]
+
+            if (configArray[brandId].hasOwnProperty(name)) {
+                var radioValue = tds.eq(1).find('input[type="radio"]:checked').val();
+                if (radioValue) {
+                    // If radio button is checked, include its value in the object
+                    configArray[brandId][name].push(radioValue);
+                }
+                // If it exists, push the obj to the existing array
+                configArray[brandId][name].push(obj);
+            } else {
+                // If it doesn't exist, create a new array with obj
+                configArray[brandId][name] = [obj];
+            }
+        })
+        // console.log(JSON.stringify(configArray));
+        return configArray;
+    },
+    handleSave: function () {
+        var self = this;
+
+        // return;
+        var configurationArray = self.prepareArray();
+        // console.log(configurationArray);
+        // return;
+        var saveUrl = this.saveUrl;
+        // console.log(this.saveUrl);
+        var formData = new FormData();
+        formData.append('configuration', JSON.stringify(configurationArray));
+        // console.log(this.currentFile);
+        // formData.append('file', this.currentFile[0]);
+        formData.append('form_key', this.formKey);
+        j.ajax({
+            url: saveUrl,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                alert('Failed to retrieve CSV headers.' + error);
+            }
+        });
     }
     
 

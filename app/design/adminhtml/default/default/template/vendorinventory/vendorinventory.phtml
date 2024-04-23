@@ -26,7 +26,8 @@
         var options = {
             url: "<?php echo $this->getUrl('*/*/getheaders'); ?>",
             containerId: "configuration-container",
-            formKey: "<?php echo $this->getFormKey() ?>"
+            formKey: "<?php echo $this->getFormKey() ?>",
+            saveUrl: "<?php echo $this->getUrl('*/*/save')?>"
         };
         var config = new Configuration(options);
     });
