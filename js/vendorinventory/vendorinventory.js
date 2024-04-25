@@ -4,8 +4,10 @@ var Configuration = Class.create({
     initialize: function(options) {
         this.containerId = options.containerId;
         this.url = options.url;
+        this.checkUrl = options.checkUrl;
         this.formKey = options.formKey;
         this.saveUrl = options.saveUrl;
+        this.header='';
         this.bindEvents();
     },
     bindEvents: function() {
@@ -13,11 +15,43 @@ var Configuration = Class.create({
         var self = this;
         var brandDropdown = $(this.containerId).down('#brandName');
         brandDropdown.observe('change', self.loadUploadContainer.bind(this));
+
     },
     
     loadUploadContainer: function(event) {
+        // asdfghj
+        $('brand-table').innerHTML = "";
         var self = this;
+        // console.log(self.formKey);
         var selectedBrand = event.target.value;
+
+        var formData = new FormData();
+        formData.append('brandId', selectedBrand);
+        formData.append('form_key', self.formKey);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', this.checkUrl, true);
+        // console.log( this.checkUrl);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response && response.headers) {
+                        // console.log('Headers:', response);
+                        self.createBrandTable(response.headers); 
+                        self.header = response.headers;
+                        self.loadTable(JSON.parse(response.configuration));
+                    } else {
+                        console.error('Invalid response format:', response);
+                    }
+                } else {
+                    console.error('Failed to retrieve headers:', xhr.status);
+                }
+            }
+        }.bind(this); // Bind the context of the function to 'this'
+
+        xhr.send(formData);
+
         var fileUploadContainer = $(this.containerId).down('#file-upload-container');
         
         if (selectedBrand) {
@@ -66,6 +100,7 @@ var Configuration = Class.create({
                     if (response && response.headers) {
                         // console.log('Headers:', response.headers);
                         self.createBrandTable(response.headers); 
+                        self.header = response.headers;
                     } else {
                         console.error('Invalid response format:', response);
                     }
@@ -81,11 +116,13 @@ var Configuration = Class.create({
     createBrandTable: function(headers) {
         var self = this;
         // console.log(this.saveUrl);
+        // console.log(headers);
         
-        var parentContainer = $(this.containerId);
+        var parentContainer = $('brand-table');
     
         var table = document.createElement('table');
         table.border = '1';
+        // $('brand-table').appendChild(table);
         
         var headerRow = document.createElement('tr');
     
@@ -171,15 +208,17 @@ var Configuration = Class.create({
             self.handleSave()};
         parentContainer.appendChild(table);
         parentContainer.appendChild(saveButton);
+
+
     },
 
     addConditionRow : function(event) {
         var clickedButton = event.target;
         var clickedRow = clickedButton.parentNode.parentNode;
 
-        var radioRow = document.createElement('tr');
-        var radioCell = document.createElement('td');
-        radioCell.colSpan = 6;
+        // var radioRow = document.createElement('tr');
+        var radioCell = document.createElement('p');
+        // radioCell.colSpan = 6;
     
         var andRadioButton = document.createElement('input');
         andRadioButton.type = 'radio';
@@ -202,19 +241,20 @@ var Configuration = Class.create({
         radioCell.appendChild(orRadioButton);
         radioCell.appendChild(orLabel);
     
-        radioRow.appendChild(radioCell);
-    
-        clickedRow.parentNode.insertBefore(radioRow, clickedRow.nextSibling);
-    
         var newRow = document.createElement('tr');
-    
+        newRow.setAttribute('name', clickedRow.getAttribute('name'));
+        // clickedRow.parentNode.insertBefore(radioRow, clickedRow.nextSibling);
+        
+        
         clickedRow.querySelectorAll('td').forEach(function(cell) {
             var newCell = document.createElement('td');
             newCell.innerHTML = cell.innerHTML;
             newRow.appendChild(newCell);
         });
-
+        
         newRow.removeChild(newRow.lastElementChild);
+        j(newRow).find('td').eq(1).find('select').before(radioCell);
+        // console.log( j(newRow).find('td').eq(1));
         
         var deleteCell = document.createElement('td');
         var deleteButton = document.createElement('button');
@@ -223,13 +263,13 @@ var Configuration = Class.create({
         deleteButton.addEventListener('click', function() {
 
             newRow.parentNode.removeChild(newRow);
-            radioRow.parentNode.removeChild(radioRow);
+            // radioRow.parentNode.removeChild(radioRow);
         });
         deleteCell.appendChild(deleteButton);
     
         newRow.appendChild(deleteCell);
     
-        clickedRow.parentNode.insertBefore(newRow, radioRow.nextSibling);
+        j(clickedRow).after(newRow);
     },
 
     prepareArray: function () {
@@ -268,17 +308,19 @@ var Configuration = Class.create({
         // console.log(JSON.stringify(configArray));
         return configArray;
     },
+
     handleSave: function () {
         var self = this;
-
+        // console.log(self.header);
         // return;
         var configurationArray = self.prepareArray();
-        // console.log(configurationArray);
+        // console.log(configurationArray); 
         // return;
         var saveUrl = this.saveUrl;
         // console.log(this.saveUrl);
         var formData = new FormData();
         formData.append('configuration', JSON.stringify(configurationArray));
+        formData.append('headers', self.header);
         // console.log(this.currentFile);
         // formData.append('file', this.currentFile[0]);
         formData.append('form_key', this.formKey);
@@ -295,7 +337,91 @@ var Configuration = Class.create({
                 alert('Failed to retrieve CSV headers.' + error);
             }
         });
-    }
+    },
     
+    createRadioInput: function (id, name, value, checked = false) {
+        var radioInput = new Element('input');
+        radioInput.id = id;
+        radioInput.name = name;
+        radioInput.type = 'radio';
+        radioInput.value = value;
+        radioInput.checked = checked;
+        return radioInput;
+    },
+    
+    createLabel: function (text, for_id) {
+        var label = new Element('label');
+        label.setAttribute('for', for_id);
+        label.textContent = text;
+        return label;
+    },
 
+    createButton: function (text) {
+        var button = new Element('button');
+        button.textContent = text;
+        return button;
+    },
+    
+    handleDelete: function (button) {
+        var currentRow = button.parentNode;
+        currentRow.parentNode.removeChild(currentRow);
+    },
+
+    loadTable: function (config) {
+        var self = this;
+        j('#configuration-container table tr').not(':first').each(function (index, tr) {
+
+            var rowConfig = config[tr.getAttribute('name')];
+            var p;
+            var prevRow = tr;
+            rowConfig.forEach(function (row, _index) {
+                if (_index >= 1) {
+                    if (row == 'AND' || row == 'OR') {
+                        var row_id = tr.getAttribute("row_id");
+                        var row_count = j("#table-container").children("table").find("tr[class=" + row_id + "]").length;
+
+                        p = new Element('p');
+                        p.appendChild(self.createRadioInput("radio_and_" + row_id + "_" + (row_count + 1), 'condition_' + row_id + '_' + (row_count + 1), 'AND', row == 'AND'));
+                        p.appendChild(self.createLabel("AND", "radio_and_" + row_id + "_" + (row_count + 1)))
+                        p.appendChild(self.createRadioInput("radio_or_" + row_id + "_" + (row_count + 1), 'condition_' + row_id + '_' + (row_count + 1), 'OR', row == 'OR'))
+                        p.appendChild(self.createLabel("OR", "radio_or_" + row_id + "_" + (row_count + 1)))
+                    } else {
+                        var rowClone = tr.cloneNode(true);
+                        j(rowClone).find('select').eq(0).before(p);
+                        var tds = j(rowClone).find("td");
+                        for (var _row in row) {
+                            // console.log(row); return;
+                            tds.eq(1).find('select').val(_row)
+                            tds.eq(2).find('select').val(row[_row][0]['data_type'])
+                            tds.eq(3).find('select').val(row[_row][1]['condition_operator'])
+                            tds.eq(4).find('input').val(row[_row][2]['condition_value'])
+                        }
+                        var lastTd = rowClone.lastElementChild;
+                        if (lastTd) {
+                            rowClone.removeChild(lastTd);
+                        }
+                        var removeBtn = self.createButton('Delete');
+                        removeBtn.observe('click', (event) => {
+                            self.handleDelete(event.target);
+                        })
+                        rowClone.append(new Element('td').appendChild(removeBtn));
+                        rowClone.firstChild.innerText = '';
+
+                        $(prevRow).after(rowClone);
+                        prevRow = rowClone;
+                    }
+                }
+                else {
+                    var tds = j(tr).find("td");
+                    for (var _row in row) {
+                        tds.eq(1).find('select').val(_row)
+                        tds.eq(2).find('select').val(row[_row][0]['data_type'])
+                        tds.eq(3).find('select').val(row[_row][1]['condition_operator'])
+                        tds.eq(4).find('input').val(row[_row][2]['condition_value'])
+                    }
+                }
+            })
+        })
+        // console.log(JSON.stringify(self.prepareArray()));
+    }
 });

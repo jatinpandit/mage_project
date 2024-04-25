@@ -10,7 +10,7 @@
     <div id="file-upload-container">
         <!-- File upload form will be added here dynamically -->
     </div>
-    <div class="barnd-table">
+    <div class="brand-table" id="brand-table">
         
     </div>
 </div>
@@ -27,7 +27,8 @@
             url: "<?php echo $this->getUrl('*/*/getheaders'); ?>",
             containerId: "configuration-container",
             formKey: "<?php echo $this->getFormKey() ?>",
-            saveUrl: "<?php echo $this->getUrl('*/*/save')?>"
+            saveUrl: "<?php echo $this->getUrl('*/*/save')?>",
+            checkUrl: "<?php echo $this->getUrl('*/*/checkBrand') ?>"
         };
         var config = new Configuration(options);
     });

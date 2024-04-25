@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Ccc_VendorInventory>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </Ccc_VendorInventory>
     </modules>
     <admin>
@@ -54,7 +54,7 @@
             <vendorinventory>
                 <class>Ccc_VendorInventory_Block</class>
             </vendorinventory>
-        </blocks>
+        </blocks>   
 
         <helpers>
             <vendorinventory>
@@ -62,4 +62,13 @@
             </vendorinventory>
         </helpers>
     </global>
+    <crontab>
+        <jobs>
+            <read_csv>
+                <run>
+                    <model>vendorinventory/observer::readCsv</model>
+                </run>
+            </read_csv>
+        </jobs>
+    </crontab>
 </config>

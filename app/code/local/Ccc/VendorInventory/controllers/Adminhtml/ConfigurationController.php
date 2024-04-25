@@ -4,7 +4,7 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
 {
     protected function _initAction()
     {
-    //    print_r( Mage::getModel('vendorinventory/configuration')->getResource()->getTable('configuration'));
+        //    print_r( Mage::getModel('vendorinventory/configuration')->getResource()->getTable('configuration'));
         // load layout, set active menu and breadcrumbs
         $this->loadLayout()
             ->_setActiveMenu('vendorinventory/configuration')
@@ -45,6 +45,7 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
             $data = fgetcsv($handle, 1000, ',');
             if ($data !== false) {
                 $headers = $data;
+
             } else {
 
                 error_log('Failed to parse CSV data from file: ' . $filePath);
@@ -70,31 +71,62 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
         $this->getResponse()->setBody(json_encode(['headers' => $headers]));
     }
 
+    public function checkBrandAction()
+    {
+        $brandId = $this->getRequest()->getPost('brandId');
+        $response = [];
+
+        $brandData = Mage::helper('vendorinventory')->checkBrand($brandId);
+        if($brandData){
+            $response['headers'] = explode(',',$brandData[0]['headers']);
+            $response['configuration'] = $brandData[0]['brand_column_cofiguration'];
+
+        }else{
+            $response = [];
+        }
+        $this->getResponse()->setBody(json_encode($response));
+    }
     public function saveAction()
     {
         try {
-            
-            $mediaPath = Mage::getBaseDir('media');
+
             $configuration = json_decode($this->getRequest()->getPost('configuration'));
-            // $file = $_FILES['file'];
-            // $response['file_name'] = $file['tmp_name'];
+            $header = $this->getRequest()->getPost('headers');
+            // print_r($header);
             foreach ($configuration as $key => $val) {
                 $brandId = $key;
                 $columnConfig = $val;
             }
-            $data = ['brand_id' => $brandId];
-            $brandConfig = Mage::getModel('vendorinventory/configuration')->setData($data)->save();
-            // $uploader = new Varien_File_Uploader('file');
-            // $uploader->setAllowRenameFiles(false);
-            // $uploader->setFilesDispersion(false);
-            // $uploader->save($mediaPath . DS . 'vendorinventory', $brandId . '_' . $brandConfig->getId() . '.csv');
-            $data = [
-                'brand_table_id' => $brandConfig->getId(),
-                'brand_column_cofiguration' => json_encode($columnConfig),
-            ];
-            $response = [];
-            Mage::getModel('vendorinventory/configuration_column')->setData($data)->save();
-            $this->getResponse()->setBody(json_encode($response));
+            // print_r($headers);
+            $brandData = Mage::helper('vendorinventory')->checkBrand($brandId);
+            // print_r($brandData);
+            if ($brandData) {
+                $data = [
+                    'id' => $brandData[0]['id'],
+                    'brand_id' => $brandData[0]['brand_id'],
+                    'headers' =>  $header,
+                ];
+                $brandConfig = Mage::getModel('vendorinventory/configuration')->setData($data)->save();
+
+                $data = [
+                    'id' => $brandData[0]['id'],
+                    'brand_table_id' => $brandData[0]['brand_table_id'],
+                    'brand_column_cofiguration' => json_encode($columnConfig),
+                ];
+                $response = [];
+                Mage::getModel('vendorinventory/configuration_column')->setData($data)->save();
+                $this->getResponse()->setBody(json_encode($response));
+            } else {
+                $data = ['brand_id' => $brandId];
+                $brandConfig = Mage::getModel('vendorinventory/configuration')->setData($data)->save();
+                $data = [
+                    'brand_table_id' => $brandConfig->getId(),
+                    'brand_column_cofiguration' => json_encode($columnConfig),
+                ];
+                $response = ['headers'];
+                Mage::getModel('vendorinventory/configuration_column')->setData($data)->save();
+                $this->getResponse()->setBody(json_encode($response));
+            }
         } catch (Exception $e) {
             $this->getResponse()->setBody('error: ' . $e->getMessage());
         }
