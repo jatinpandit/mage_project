@@ -49,7 +49,7 @@ $table = $installer->getConnection()
             ->addColumn('brand_table_id', Varien_Db_Ddl_Table::TYPE_SMALLINT, null, array( 
                 'nullable' => false 
             ),'Brand Table Id')
-            ->addColumn('brand_column_cofiguration', Varien_Db_Ddl_Table::TYPE_TEXT,300, array(
+            ->addColumn('brand_column_configuration', Varien_Db_Ddl_Table::TYPE_TEXT,300, array(
                 'nullable' => false
             ),'Brand Coloumn Configuration')
             ->setComment('CCC VendorInventory Configuration Rule Table');

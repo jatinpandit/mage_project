@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Ccc_VendorInventory>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </Ccc_VendorInventory>
     </modules>
     <admin>
@@ -40,6 +40,9 @@
                     <configuration_column>
                         <table>ccc_vendorinventory_column_configuration</table>
                     </configuration_column>
+                    <items>
+                        <table>ccc_vendorinventory_items</table>
+                    </items>
                 </entities>
             </vendorinventory_resource>
         </models>

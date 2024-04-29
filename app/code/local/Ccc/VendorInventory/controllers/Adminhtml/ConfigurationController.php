@@ -79,7 +79,7 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
         $brandData = Mage::helper('vendorinventory')->checkBrand($brandId);
         if($brandData){
             $response['headers'] = explode(',',$brandData[0]['headers']);
-            $response['configuration'] = $brandData[0]['brand_column_cofiguration'];
+            $response['configuration'] = $brandData[0]['brand_column_configuration'];
 
         }else{
             $response = [];
@@ -111,7 +111,7 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
                 $data = [
                     'id' => $brandData[0]['id'],
                     'brand_table_id' => $brandData[0]['brand_table_id'],
-                    'brand_column_cofiguration' => json_encode($columnConfig),
+                    'brand_column_configuration' => json_encode($columnConfig),
                 ];
                 $response = [];
                 Mage::getModel('vendorinventory/configuration_column')->setData($data)->save();
@@ -121,7 +121,7 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
                 $brandConfig = Mage::getModel('vendorinventory/configuration')->setData($data)->save();
                 $data = [
                     'brand_table_id' => $brandConfig->getId(),
-                    'brand_column_cofiguration' => json_encode($columnConfig),
+                    'brand_column_configuration' => json_encode($columnConfig),
                 ];
                 $response = ['headers'];
                 Mage::getModel('vendorinventory/configuration_column')->setData($data)->save();
