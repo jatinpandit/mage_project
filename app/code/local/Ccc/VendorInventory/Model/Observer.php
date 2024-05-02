@@ -17,7 +17,7 @@ class Ccc_Vendorinventory_Model_Observer
                 ->join('configuration', 'main_table.brand_table_id=configuration.id');
             // echo $collection->getselect();
             $brandConfig = json_decode($collection->getFirstItem()->getBrandColumnConfiguration());
-            echo "<pre>";
+            // echo "<pre>";
             // print_r($brandConfig['sku'][0]);
             $file = fopen($csvPath, 'r');
             $headers = fgetcsv($file);
@@ -25,21 +25,30 @@ class Ccc_Vendorinventory_Model_Observer
             $data = [];
 
             while ($row = fgetcsv($file)) {
+                $model = Mage::getModel('vendorinventory/items');
                 $data = array_combine($headers, $row);
                 // print_r($data);
                 $temp = [];
                 foreach ($brandConfig as $_column => $_config) {
                     $dataColumn = '';
+                    $temp[$_column] = null;
                     $rule = [];
                     foreach ($_config as $_c) {
                         // print_r($_c);
                         if (!is_string($_c)) {
                             foreach ($_c as $_k => $_v) {
                                 $dataColumn = $_k;
-                                if($_column === 'sku'){
+                                if ($_column === 'sku') {
+                                    $itemcollection = $model->getCollection()->addFieldtoFilter('sku', $data[$_k]);
+                                    // var_dump($itemcollection->getFirst/Item());
+                                    if ($itemcollection->getFirstItem()->getId()) {
+                                        // echo 111;
+                                        $model->load($itemcollection->getFirstItem()->getId());
+                                    }
                                     $rule[] = true;
                                     break;
                                 }
+
                                 if ($_v->condition_value) {
                                     $rule[] = $this->checkRule(
                                         $data[$_k],
@@ -82,9 +91,9 @@ class Ccc_Vendorinventory_Model_Observer
                     if ($result)
                         $temp[$_column] = $data[$dataColumn];
                 }
-                print_r($temp);
+                // print_r($temp);
                 $temp['brand_id'] = $brandId;
-                Mage::getModel('vendorinventory/items')->setData($temp)->save();
+                $model->addData($temp)->save(); 
             }
         }
     }
@@ -95,19 +104,19 @@ class Ccc_Vendorinventory_Model_Observer
             case "count":
             case "number":
                 // echo 1;
-                return $this->compareValues((int) $dataValue, (int) $condValue, $condOperator);
+                return $this->compare((int) $dataValue, (int) $condValue, $condOperator);
             // break;
             case "text":
                 // echo 1;
-                return $this->compareValues(strtolower($dataValue), strtolower($condValue), $condOperator);
+                return $this->compare(strtolower($dataValue), strtolower($condValue), $condOperator);
             case "date":
                 $date1 = DateTime::createFromFormat('d-m-Y', $dataValue);
                 $date2 = DateTime::createFromFormat('d/m/Y', $condValue);
-                return $this->compareValues($date1, $date2, $condOperator);
+                return $this->compare($date1, $date2, $condOperator);
         }
     }
 
-    public function compareValues($value1, $value2, $operator)
+    public function compare($value1, $value2, $operator)
     {
         switch ($operator) {
             case "=":

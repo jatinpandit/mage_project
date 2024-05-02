@@ -24,22 +24,8 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
     {
         $file = $_FILES['file'];
 
-        if ($file['error'] !== UPLOAD_ERR_OK) {
-            $errorMessage = 'File upload failed with error code: ' . $file['error'];
-            $this->getResponse()->setHeader('Content-type', 'application/json');
-            $this->getResponse()->setBody(json_encode(['error' => $errorMessage]));
-            return;
-        }
-
         $filePath = $file['tmp_name'];
         $headers = [];
-
-        if (!file_exists($filePath)) {
-            $errorMessage = 'Uploaded file does not exist: ' . $filePath;
-            $this->getResponse()->setHeader('Content-type', 'application/json');
-            $this->getResponse()->setBody(json_encode(['error' => $errorMessage]));
-            return;
-        }
 
         if (($handle = fopen($filePath, 'r')) !== false) {
             $data = fgetcsv($handle, 1000, ',');
@@ -57,11 +43,6 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
                 return;
             }
 
-        } else {
-            $errorMessage = 'Failed to open file: ' . $filePath;
-            $this->getResponse()->setHeader('Content-type', 'application/json');
-            $this->getResponse()->setBody(json_encode(['error' => $errorMessage]));
-            return;
         }
 
         fclose($handle);

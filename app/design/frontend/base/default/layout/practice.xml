@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <cms_index_index>
+        <reference name="content">
+            <block type="practice/practice" name="page_show" before="widget-new-products">
+                <action method="setTemplate">
+                    <template>practice/view.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </cms_index_index>
+</layout>

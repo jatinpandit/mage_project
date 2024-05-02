@@ -4,7 +4,7 @@ class Ccc_Vendorinventory_Model_Resource_Items_Collection extends Mage_Core_Mode
 {
     public function _construct()
     {
-        $this->_init('vendotinventory/items');
+        $this->_init('vendorinventory/items');
         parent::_construct();
     }
 }

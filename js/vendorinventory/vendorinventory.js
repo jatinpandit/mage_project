@@ -20,10 +20,8 @@ var Configuration = Class.create({
     },
 
     loadUploadContainer: function (event) {
-        // asdfghj
         $('brand-table').innerHTML = "";
         var self = this;
-        // console.log(self.formKey);
         var selectedBrand = event.target.value;
 
         var formData = new FormData();
@@ -31,7 +29,7 @@ var Configuration = Class.create({
         formData.append('form_key', self.formKey);
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', this.checkUrl, true);
+        xhr.open('POST', self.checkUrl, true);
         // console.log( this.checkUrl);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -53,7 +51,7 @@ var Configuration = Class.create({
 
         xhr.send(formData);
 
-        var fileUploadContainer = $(this.containerId).down('#file-upload-container');
+        var fileUploadContainer = $(self.containerId).down('#file-upload-container');
 
         if (selectedBrand) {
             fileUploadContainer.innerHTML = '<input type="file" id="file-upload" name="file" accept=".csv,.xls,xml"><button id="upload-btn">Upload</button>';
@@ -407,7 +405,7 @@ var Configuration = Class.create({
                             tds.eq(4).find('input').val(row[_row]['condition_value'])
                         }
                         var lastTd = rowClone.lastElementChild;
-                        if (lastTd) {
+                        if (lastTd) { 
                             rowClone.removeChild(lastTd);
                         }
                         var removeBtn = self.createButton('Delete');

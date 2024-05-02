@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+            <Xyz_Practice>
+                <version>1.0.0</version>
+            </Xyz_Practice>
+    </modules>
+    <frontend>
+        <layout>
+            <updates>
+                <practice>
+                    <file>practice.xml</file>
+                </practice>
+            </updates>
+        </layout>
+        <routers>
+            <practice>
+                <use>standard</use>
+                <args>
+                    <module>Xyz_Practice</module>
+                    <frontName>practice</frontName>
+                </args>
+            </practice>
+        </routers>
+    </frontend>
+    <global>
+        <blocks>
+            <practice>
+                <class>Xyz_Practice_Block</class>
+            </practice>
+        </blocks>
+    </global>
+</config>

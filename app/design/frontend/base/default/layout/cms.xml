@@ -58,7 +58,7 @@ Default layout, loads most of the pages
         <label>CMS Home Page</label>
     </cms_index_index>
 
-    <cms_index_defaultindex>
+    <cms_index_defaultindex>    
         <remove name="right"/>
         <remove name="left"/>
 

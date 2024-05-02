@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Xyz_Practice>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Xyz_Practice>
+    </modules>
+</config>   
