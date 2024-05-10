@@ -17,8 +17,8 @@ class Ccc_Vendorinventory_Model_Observer
                 ->join('configuration', 'main_table.brand_table_id=configuration.id');
             // echo $collection->getselect();
             $brandConfig = json_decode($collection->getFirstItem()->getBrandColumnConfiguration());
-            // echo "<pre>";
-            // print_r($brandConfig['sku'][0]);
+            echo "<pre>";
+            // print_r($brandConfig);
             $file = fopen($csvPath, 'r');
             $headers = fgetcsv($file);
             // print_r($headers);
@@ -34,9 +34,9 @@ class Ccc_Vendorinventory_Model_Observer
                     $temp[$_column] = null;
                     $rule = [];
                     foreach ($_config as $_c) {
-                        // print_r($_c);
                         if (!is_string($_c)) {
                             foreach ($_c as $_k => $_v) {
+                                // print_r($_k);
                                 $dataColumn = $_k;
                                 if ($_column === 'sku') {
                                     $itemcollection = $model->getCollection()->addFieldtoFilter('sku', $data[$_k]);
@@ -49,6 +49,7 @@ class Ccc_Vendorinventory_Model_Observer
                                     break;
                                 }
 
+                                // print_r($_v->condition_value);
                                 if ($_v->condition_value) {
                                     $rule[] = $this->checkRule(
                                         $data[$_k],
@@ -59,7 +60,6 @@ class Ccc_Vendorinventory_Model_Observer
                                 } else {
                                     $rule[] = false;
                                 }
-                                // print_r($_v);
                             }
                         } else {
                             // echo 111;
@@ -88,12 +88,30 @@ class Ccc_Vendorinventory_Model_Observer
                             }
                         }
                     }
-                    if ($result)
-                        $temp[$_column] = $data[$dataColumn];
+                    $val = 0;
+                    if ($result) {
+                        // print_r($_column);
+                        switch ($_column) {
+                            case 'sku':
+                            case 'restock_date':
+                            case 'instock_qty':
+                            case 'restock_qty':
+                                $val = $data[$dataColumn];
+                                break;
+                            case 'instock':
+                            case 'status':
+                            case 'discontinued':
+                                $val = 1;
+                                break;
+
+
+                        }
+                    }
+                    $temp[$_column] = $val;
                 }
                 // print_r($temp);
                 $temp['brand_id'] = $brandId;
-                $model->addData($temp)->save(); 
+                $model->addData($temp)->save();
             }
         }
     }
@@ -134,4 +152,24 @@ class Ccc_Vendorinventory_Model_Observer
                 return $value1 < $value2;
         }
     }
+
+    public function instockCheck()
+    {
+        $collection = Mage::getModel('vendorinventory/items')->getCollection()->getItems();
+        foreach ($collection as $c) {
+            $model = Mage::getModel('catalog/product')->getCollection()->addFieldtoFilter('sku', $c->getSku())->getFirstItem();
+            if ($c->getInstock() == 1) {
+                $instockDate = date('d/m/Y');
+            } elseif ($c->getRestockDate() != 0) {
+                echo "<pre>";
+                $instockDate = DateTime::createFromFormat('d-m-Y', $c->getRestockDate())->format('d/m/Y');
+                var_dump($c->getSku());
+                print_r($instockDate);
+            } else {
+                $instockDate = null;
+            }
+            $model->addAttributeUpdate('instock_date', $instockDate);
+        }
+    }
+
 }

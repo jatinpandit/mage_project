@@ -117,6 +117,7 @@ class Mage_Adminhtml_Block_Catalog_Product_Grid extends Mage_Adminhtml_Block_Wid
         else {
             $collection->addAttributeToSelect('price');
             $collection->joinAttribute('status', 'catalog_product/status', 'entity_id', null, 'inner');
+            $collection->joinAttribute('brand', 'catalog_product/brand', 'entity_id', null, 'left');
             $collection->joinAttribute('visibility', 'catalog_product/visibility', 'entity_id', null, 'inner');
         }
 
@@ -194,6 +195,14 @@ class Mage_Adminhtml_Block_Catalog_Product_Grid extends Mage_Adminhtml_Block_Wid
                 'header'=> Mage::helper('catalog')->__('SKU'),
                 'width' => '80px',
                 'index' => 'sku',
+        ));
+        $this->addColumn('brand',
+            array(
+                'header'=> Mage::helper('catalog')->__('brand'),
+                'width' => '80px',
+                'index' => 'brand',
+                'type'  => 'options',
+                'options' => Mage::getModel('catalog/product_brand')->getOptionArray(),
         ));
 
         $store = $this->_getStore();

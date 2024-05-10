@@ -25,9 +25,9 @@
     </frontend>
     <global>
         <blocks>
-            <practice>
+            <test>
                 <class>Xyz_Practice_Block</class>
-            </practice>
+            </test>
         </blocks>
     </global>
 </config>

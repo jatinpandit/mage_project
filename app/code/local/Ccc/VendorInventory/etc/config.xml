@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Ccc_VendorInventory>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
         </Ccc_VendorInventory>
     </modules>
     <admin>
@@ -25,6 +25,15 @@
             </updates>
         </layout>
     </adminhtml>
+    <frontend>
+        <layout>
+            <updates>
+                <vendorinventory>
+                    <file>vendorinventory.xml</file>
+                </vendorinventory>
+            </updates>
+        </layout>
+    </frontend>
     <global>
         <models>
             <vendorinventory>
@@ -50,6 +59,7 @@
             <vendorinventory_setup>
                 <setup>
                     <module>Ccc_VendorInventory</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>X
                 </setup>
             </vendorinventory_setup>
         </resources>
