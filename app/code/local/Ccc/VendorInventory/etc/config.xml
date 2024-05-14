@@ -82,6 +82,11 @@
                     <model>vendorinventory/observer::readCsv</model>
                 </run>
             </read_csv>
+            <instock_check>
+                <run>
+                    <model>vendorinventory/observer::instockCheck</model>
+                </run>
+            </instock_check>
         </jobs>
     </crontab>
 </config>

@@ -9,10 +9,10 @@
                         <title>Configuration</title>
                         <action>adminhtml/configuration</action>
                     </configuration>
-                    <instock>
+                    <!-- <instock>
                         <title>Instock Date</title>
                         <action>adminhtml/instock</action>
-                    </instock>
+                    </instock> -->
                 </children>
         </vendorinventory> 
     </menu>

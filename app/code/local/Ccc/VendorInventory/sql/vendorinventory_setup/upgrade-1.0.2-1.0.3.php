@@ -20,3 +20,5 @@ $data = [
 $installer->addAttribute($entityTypeId,$attributeCode,$data);
 
 $installer->endSetup();
+
+// $installer->updateAttribute($entityTypeId, $attributeCode, 'frontend_input', 'text');
