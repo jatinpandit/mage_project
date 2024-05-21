@@ -24,7 +24,7 @@
     jQuery.noConflict();
     document.observe('dom:loaded', function () {
         var options = {
-            url: "<?php echo $this->getUrl('*/*/getheaders'); ?>",
+            url: "<?php echo $this->getUrl('*/*/getHeaders'); ?>",
             containerId: "configuration-container",
             formKey: "<?php echo $this->getFormKey() ?>",
             saveUrl: "<?php echo $this->getUrl('*/*/save')?>",

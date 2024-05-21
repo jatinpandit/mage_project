@@ -198,7 +198,7 @@ class Mage_Adminhtml_Block_Catalog_Product_Grid extends Mage_Adminhtml_Block_Wid
         ));
         $this->addColumn('brand',
             array(
-                'header'=> Mage::helper('catalog')->__('brand'),
+                'header'=> Mage::helper('catalog')->__('Brand'),
                 'width' => '80px',
                 'index' => 'brand',
                 'type'  => 'options',

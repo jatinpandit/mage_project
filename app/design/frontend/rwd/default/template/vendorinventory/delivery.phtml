@@ -1,5 +1,8 @@
 <?php
 $date = $this->getDate();
+$showdate = $this->showDate();
+
+if($showdate == 1){
 ?>
 Expected Delivery Date:
 <span class="instock">
@@ -10,3 +13,4 @@ Expected Delivery Date:
         color: #3399cc;
     }
 </style> 
+<?php } ?>

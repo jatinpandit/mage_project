@@ -17,7 +17,7 @@ class Ccc_Vendorinventory_Model_Observer
                 ->join('configuration', 'main_table.brand_table_id=configuration.id');
             // echo $collection->getselect();
             $brandConfig = json_decode($collection->getFirstItem()->getBrandColumnConfiguration());
-            echo "<pre>";
+            // echo "<pre>";
             // print_r($brandConfig);
             $file = fopen($csvPath, 'r');
             $headers = fgetcsv($file);
@@ -161,10 +161,10 @@ class Ccc_Vendorinventory_Model_Observer
             if ($c->getInstock() == 1) {
                 $instockDate = date('d/m/Y');
             } elseif ($c->getRestockDate() != 0) {
-                echo "<pre>";
+                // echo "<pre>";
                 $instockDate = DateTime::createFromFormat('d-m-Y', $c->getRestockDate())->format('d/m/Y');
-                var_dump($c->getSku());
-                print_r($instockDate);
+                // var_dump($c->getSku());
+                // print_r($instockDate);
             } else {
                 $instockDate = null;
             }

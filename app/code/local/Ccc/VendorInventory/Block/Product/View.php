@@ -27,4 +27,9 @@ class Ccc_VendorInventory_Block_Product_View extends Mage_Catalog_Block_Product_
             return 'Backorder';
         }
     }
-}   
+
+    public function showDate()
+    {
+        return Mage::getStoreConfig("vendorinventory/settings/show_date");
+    }
+}

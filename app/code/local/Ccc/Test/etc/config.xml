@@ -17,6 +17,17 @@
             </test>
         </routers>
     </frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <ccc_test before="Ccc_Banner_Adminhtml">Ccc_Test_Adminhtml</ccc_test>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
     <global>
         <models>
             <ccc_test>

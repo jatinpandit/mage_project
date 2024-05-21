@@ -15,6 +15,27 @@
         </layout>
     </adminhtml>
     <global>
+        <events>
+            <admin_system_config_changed_section_banner>
+              <observers>
+                <banner_config_observer>
+                  <type>singleton</type>
+                  <class>banner/observer</class>
+                  <method>bannerUpdated</method>
+                </banner_config_observer>
+              </observers>
+            </admin_system_config_changed_section_banner>
+      
+            <admin_system_config_changed_section_advanced>
+              <observers>
+                <banner_config_observer>
+                  <type>singleton</type>
+                  <class>banner/observer</class>
+                  <method>advancedUpdated</method>
+                </banner_config_observer>
+              </observers>
+            </admin_system_config_changed_section_advanced>
+          </events>
         <models>
             <banner>
                 <class>Ccc_Banner_Model</class>
@@ -44,6 +65,11 @@
             <banner>
                 <class>Ccc_Banner_Block</class>
             </banner>
+            <!-- <vendorinventory>
+                <rewrite>
+                    <adminhtml_configuration>Ccc_Banner_Block_Adminhtml_Banner</adminhtml_configuration>
+                </rewrite>
+            </vendorinventory> -->
         </blocks>
         <helpers>
             <banner>

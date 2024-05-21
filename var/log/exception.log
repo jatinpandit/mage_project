@@ -4231,3 +4231,53 @@ Stack trace:
 #18 C:\xampp\htdocs\1SBMagento\app\Mage.php(686): Mage_Core_Model_App->run(Array)
 #19 C:\xampp\htdocs\1SBMagento\index.php(83): Mage::run('', 'store')
 #20 {main}
+2024-05-21T06:10:09+00:00 ERR (3): 
+Mage_Core_Exception: Invalid block type: Ccc_Banner_Block_Adminhtml_Configuration_Grid in C:\xampp\htdocs\1SBMagento\app\Mage.php:598
+Stack trace:
+#0 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(495): Mage::throwException('Invalid block t...')
+#1 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(437): Mage_Core_Model_Layout->_getBlockInstance('Ccc_Banner_Bloc...', Array)
+#2 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Block\Widget\Grid\Container.php(66): Mage_Core_Model_Layout->createBlock('banner/adminhtm...', 'adminhtml_confi...')
+#3 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Banner\Block\Adminhtml\Banner.php(23): Mage_Adminhtml_Block_Widget_Grid_Container->_prepareLayout()
+#4 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Block\Abstract.php(297): Ccc_Banner_Block_Adminhtml_Banner->_prepareLayout()
+#5 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(456): Mage_Core_Block_Abstract->setLayout(Object(Mage_Core_Model_Layout))
+#6 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(472): Mage_Core_Model_Layout->createBlock('banner/adminhtm...', 'banner_grid')
+#7 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(239): Mage_Core_Model_Layout->addBlock('banner/adminhtm...', 'banner_grid')
+#8 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(205): Mage_Core_Model_Layout->_generateBlock(Object(Mage_Core_Model_Layout_Element), Object(Mage_Core_Model_Layout_Element))
+#9 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(210): Mage_Core_Model_Layout->generateBlocks(Object(Mage_Core_Model_Layout_Element))
+#10 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(344): Mage_Core_Model_Layout->generateBlocks()
+#11 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(269): Mage_Core_Controller_Varien_Action->generateLayoutBlocks()
+#12 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Controller\Action.php(285): Mage_Core_Controller_Varien_Action->loadLayout(NULL, true, true)
+#13 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Banner\controllers\Adminhtml\BannerController.php(8): Mage_Adminhtml_Controller_Action->loadLayout()
+#14 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Test\controllers\Adminhtml\BannerController.php(14): Ccc_Banner_Adminhtml_BannerController->_initAction()
+#15 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(418): Ccc_Test_Adminhtml_BannerController->indexAction()
+#16 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Router\Standard.php(254): Mage_Core_Controller_Varien_Action->dispatch('index')
+#17 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#18 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\App.php(365): Mage_Core_Controller_Varien_Front->dispatch()
+#19 C:\xampp\htdocs\1SBMagento\app\Mage.php(686): Mage_Core_Model_App->run(Array)
+#20 C:\xampp\htdocs\1SBMagento\index.php(83): Mage::run('', 'store')
+#21 {main}
+2024-05-21T07:32:40+00:00 ERR (3): 
+Mage_Core_Exception: Invalid block type: Mage_Adminhtml_Block_Empty_Grid in C:\xampp\htdocs\1SBMagento\app\Mage.php:598
+Stack trace:
+#0 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(495): Mage::throwException('Invalid block t...')
+#1 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(437): Mage_Core_Model_Layout->_getBlockInstance('Mage_Adminhtml_...', Array)
+#2 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Block\Widget\Grid\Container.php(66): Mage_Core_Model_Layout->createBlock('adminhtml/empty...', 'empty.grid')
+#3 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Banner\Block\Adminhtml\Banner.php(27): Mage_Adminhtml_Block_Widget_Grid_Container->_prepareLayout()
+#4 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Block\Abstract.php(297): Ccc_Banner_Block_Adminhtml_Banner->_prepareLayout()
+#5 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(456): Mage_Core_Block_Abstract->setLayout(Object(Mage_Core_Model_Layout))
+#6 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(472): Mage_Core_Model_Layout->createBlock('vendorinventory...', 'configuration_g...')
+#7 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(239): Mage_Core_Model_Layout->addBlock('vendorinventory...', 'configuration_g...')
+#8 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(205): Mage_Core_Model_Layout->_generateBlock(Object(Mage_Core_Model_Layout_Element), Object(Mage_Core_Model_Layout_Element))
+#9 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(210): Mage_Core_Model_Layout->generateBlocks(Object(Mage_Core_Model_Layout_Element))
+#10 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(344): Mage_Core_Model_Layout->generateBlocks()
+#11 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(269): Mage_Core_Controller_Varien_Action->generateLayoutBlocks()
+#12 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Controller\Action.php(285): Mage_Core_Controller_Varien_Action->loadLayout(NULL, true, true)
+#13 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\VendorInventory\controllers\Adminhtml\ConfigurationController.php(9): Mage_Adminhtml_Controller_Action->loadLayout()
+#14 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\VendorInventory\controllers\Adminhtml\ConfigurationController.php(18): Ccc_VendorInventory_Adminhtml_ConfigurationController->_initAction()
+#15 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(418): Ccc_VendorInventory_Adminhtml_ConfigurationController->indexAction()
+#16 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Router\Standard.php(254): Mage_Core_Controller_Varien_Action->dispatch('index')
+#17 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#18 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\App.php(365): Mage_Core_Controller_Varien_Front->dispatch()
+#19 C:\xampp\htdocs\1SBMagento\app\Mage.php(686): Mage_Core_Model_App->run(Array)
+#20 C:\xampp\htdocs\1SBMagento\index.php(83): Mage::run('', 'store')
+#21 {main}

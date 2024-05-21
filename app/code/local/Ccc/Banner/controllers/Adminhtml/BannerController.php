@@ -15,7 +15,7 @@ class Ccc_Banner_Adminhtml_BannerController extends Mage_Adminhtml_Controller_Ac
 
     public function indexAction()
     {
-        // echo 123;
+        // var_dump(!(int)(1));
         $this->_title($this->__('Banner'))
             ->_title($this->__('Banner'))
             ->_title($this->__('Manage Banner'));

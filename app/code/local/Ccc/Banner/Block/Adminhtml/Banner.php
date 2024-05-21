@@ -1,9 +1,14 @@
 <?php
-class Ccc_Banner_Block_Adminhtml_Banner extends Mage_Adminhtml_Block_Widget_Grid_Container
+class Ccc_Banner_Block_Adminhtml_Banner 
+extends 
+// Ccc_VendorInventory_Block_Adminhtml_Configuration
+// Xyz_Practice_Block_Adminhtml_Practice
+Mage_Adminhtml_Block_Widget_Grid_Container  
 {
 
     public function __construct()
     {
+        // echo 111;
         $this->_blockGroup = 'banner';
         $this->_controller = 'adminhtml_banner';
         $this->_headerText = Mage::helper('banner')->__('Manage Banner');

@@ -4,6 +4,7 @@ class Ccc_VendorInventory_Block_Adminhtml_Configuration extends Mage_Adminhtml_B
 
     public function __construct()
     {
+        // echo "Confoguration Block";
         $this->_blockGroup = 'vendorinventory';
         $this->_controller = 'adminhtml_configuration';
         $this->_headerText = Mage::helper('vendorinventory')->__('Configuration');

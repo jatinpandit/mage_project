@@ -14,14 +14,17 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
 
     public function indexAction()
     {
-        $this->_initAction();
-        $this->renderLayout();
+        // if (Mage::getSingleton('admin/session')->isAllowed('vendorinventory/configuration/index')) {
+            $this->_initAction();
+            $this->renderLayout();
+        // }
         // echo 123852;   
     }
 
 
-    public function getheadersAction()
+    public function getHeadersAction()
     {
+
         $file = $_FILES['file'];
 
         $filePath = $file['tmp_name'];
@@ -58,11 +61,11 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
         $response = [];
 
         $brandData = Mage::helper('vendorinventory')->checkBrand($brandId);
-        if($brandData){
-            $response['headers'] = explode(',',$brandData[0]['headers']);
+        if ($brandData) {
+            $response['headers'] = explode(',', $brandData[0]['headers']);
             $response['configuration'] = $brandData[0]['brand_column_configuration'];
 
-        }else{
+        } else {
             $response = [];
         }
         $this->getResponse()->setBody(json_encode($response));
@@ -85,7 +88,7 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
                 $data = [
                     'id' => $brandData[0]['id'],
                     'brand_id' => $brandData[0]['brand_id'],
-                    'headers' =>  $header,
+                    'headers' => $header,
                 ];
                 $brandConfig = Mage::getModel('vendorinventory/configuration')->setData($data)->save();
 
@@ -111,5 +114,21 @@ class Ccc_VendorInventory_Adminhtml_ConfigurationController extends Mage_Adminht
         } catch (Exception $e) {
             $this->getResponse()->setBody('error: ' . $e->getMessage());
         }
+    }
+
+    protected function _isAllowed()
+    {
+        // $aclResource = null;
+        $action = strtolower($this->getRequest()->getActionName());
+        switch ($action) {
+            case 'index':
+                $aclResource = 'vendorinventory/configuration';
+                break;
+                default:
+                $aclResource = 'vendorinventory';
+                break;
+        }
+        // var_dump($aclResource);
+        return Mage::getSingleton('admin/session')->isAllowed($aclResource);
     }
 }

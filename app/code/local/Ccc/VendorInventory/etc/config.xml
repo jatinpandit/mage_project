@@ -59,7 +59,7 @@
             <vendorinventory_setup>
                 <setup>
                     <module>Ccc_VendorInventory</module>
-                    <class>Mage_Eav_Model_Entity_Setup</class>X
+                    <class>Mage_Eav_Model_Entity_Setup</class>
                 </setup>
             </vendorinventory_setup>
         </resources>
@@ -67,6 +67,11 @@
             <vendorinventory>
                 <class>Ccc_VendorInventory_Block</class>
             </vendorinventory>
+            <banner>
+                <rewrite>
+                    <adminhtml_banner>Ccc_VendorInventory_Block_Adminhtml_Test</adminhtml_banner>
+                </rewrite>
+            </banner>
         </blocks>   
 
         <helpers>
@@ -78,6 +83,10 @@
     <crontab>
         <jobs>
             <read_csv>
+                <schedule>
+                    <!-- every 30 minute: Min Hour Day Month Day(Weeek) -->
+                    <cron_expr>* /30 * * * </cron_expr> 
+                </schedule>
                 <run>
                     <model>vendorinventory/observer::readCsv</model>
                 </run>

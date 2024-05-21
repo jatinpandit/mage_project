@@ -4,25 +4,47 @@
         <vendorinventory translate="title" module="vendorinventory">
             <title>Vendor Inventory</title>
             <sort_order>100</sort_order>
-                <children>
-                    <configuration>
-                        <title>Configuration</title>
-                        <action>adminhtml/configuration</action>
-                    </configuration>
-                    <!-- <instock>
+            <children>
+                <configuration>
+                    <title>Configuration</title>
+                    <action>adminhtml/configuration</action>
+                </configuration>
+                <!-- <instock>
                         <title>Instock Date</title>
                         <action>adminhtml/instock</action>
                     </instock> -->
-                </children>
-        </vendorinventory> 
+            </children>
+        </vendorinventory>
     </menu>
     <acl>
         <resources>
             <admin>
                 <children>
-                    <vendorinventory translate="title" module="ccc_vendorinventory">
+                    <vendorinventory translate="title" module="vendorinventory">
                         <title>VendorInventory</title>
+                        <sort_order>100</sort_order>
+                        <children>
+                            <configuration>
+                                <title>Configuration</title>
+                                <!-- <children>
+                                    <headers>
+                                        <title>headers</title>
+                                    </headers>
+                                </children> -->
+                            </configuration>
+                        </children>
                     </vendorinventory>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <vendorinventory translate="title" module="vendorinventory">
+                                        <title>settings</title>
+                                    </vendorinventory>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
                 </children>
             </admin>
         </resources>
