@@ -85,7 +85,7 @@
             <read_csv>
                 <schedule>
                     <!-- every 30 minute: Min Hour Day Month Day(Weeek) -->
-                    <cron_expr>* /30 * * * </cron_expr> 
+                    <cron_expr>*/30 * * * * </cron_expr> 
                 </schedule>
                 <run>
                     <model>vendorinventory/observer::readCsv</model>
