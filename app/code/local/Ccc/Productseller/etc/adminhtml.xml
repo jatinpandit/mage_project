@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <productseller translate="title" module="productseller">
+            <title>Customers</title>
+            <sort_order>105</sort_order>
+            <children>
+                <seller>
+                    <title>Sellers</title>
+                    <action>adminhtml/productseller</action>
+                </seller>
+                <report>
+                    <title>Seller Report</title>
+                    <action>adminhtml/report</action>
+                </report>
+            </children>
+        </productseller>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <productseller translate="title" module="vendorinventory">
+                        <title>Product Seller</title>
+                        <sort_order>110</sort_order>
+                        <children>
+                            <sellergrid>
+                                <title>Seller Grid</title>
+                            </sellergrid>
+                            <sellerreport>
+                                <title>Seller Report</title>
+                            </sellerreport>
+                        </children>
+                    </productseller>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <productseller translate="title" module="productseller">
+                                        <title>settings</title>
+                                    </productseller>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
