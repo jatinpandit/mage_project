@@ -15,28 +15,28 @@ class Ccc_Productseller_Block_Adminhtml_Productseller_Edit extends Mage_Adminhtm
         
         // echo 111;die;
 
-        // $this->_addButton('saveandcontinue', array(
-        //     'label'     => Mage::helper('adminhtml')->__('Save and Continue Edit'),
-        //     'onclick'   => 'saveAndContinueEdit()',
-        //     'class'     => 'save',
-        // ), -100);
+        $this->_addButton('saveandcontinue', array(
+            'label'     => Mage::helper('adminhtml')->__('Save and Continue Edit'),
+            'onclick'   => 'saveAndContinueEdit()',
+            'class'     => 'save',
+        ), -100);
 
-        // $this->_formScripts[] = "
+        $this->_formScripts[] = "
             
 
-        //     function saveAndContinueEdit(){
-        //         editForm.submit($('edit_form').action+'back/edit/');
-        //     }
-        // ";
+            function saveAndContinueEdit(){
+                editForm.submit($('edit_form').action+'back/edit/');
+            }
+        ";
     }
 
-    // public function getHeaderText()
-    // {
-    //     if (Mage::registry('ccc_productseller')->getId()) {
-    //         return Mage::helper('productseller')->__("Edit Seller '%s'", $this->escapeHtml(Mage::registry('ccc_productseller')->getTitle()));
-    //     }
-    //     else {
-    //         return Mage::helper('productseller')->__('New Seller');
-    //     }
-    // }
+    public function getHeaderText()
+    {
+        if (Mage::registry('ccc_productseller')->getId()) {
+            return Mage::helper('productseller')->__("Edit Seller '%s'", $this->escapeHtml(Mage::registry('ccc_productseller')->getSellerName()));
+        }
+        else {
+            return Mage::helper('productseller')->__('New Seller');
+        }
+    }
 }

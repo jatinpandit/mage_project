@@ -5,7 +5,7 @@ class Ccc_Productseller_Block_Adminhtml_Renderer_Seller extends Mage_Adminhtml_B
     {
         $sellerId = $row->getData($this->getColumn()->getIndex());
 
-        // Fetch the company name based on the seller ID (Example query)
+
         $companyName = Mage::getSingleton('core/resource')->getConnection('core_read')
             ->select()
             ->from(array('seller' => 'ccc_seller'), 'company_name')

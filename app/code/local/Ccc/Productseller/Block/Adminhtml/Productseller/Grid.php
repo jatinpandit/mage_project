@@ -58,7 +58,7 @@ class Ccc_Productseller_Block_Adminhtml_Productseller_Grid extends Mage_Adminhtm
         ));
         $this->addColumn('is_active', array(
             'header'    => 'Active',
-            'index'     => 'active',
+            'index'     => 'is_active',
             'type'      => 'options',
             'options'   => array(
                 0 => 'No',
@@ -83,5 +83,34 @@ class Ccc_Productseller_Block_Adminhtml_Productseller_Grid extends Mage_Adminhtm
     public function getRowUrl($row)
     {
         return $this->getUrl('*/*/edit', array('id' => $row->getId()));
+    }
+
+    protected function _prepareMassaction()
+    {
+        $this->setMassactionIdField('id');
+        $this->getMassactionBlock()->setFormFieldName('seller_ids');
+        $this->getMassactionBlock()->setUseSelectAll(false);
+
+
+        $statuses = [
+            0 => "No",
+            1 => "Yes",
+        ];
+
+        $this->getMassactionBlock()->addItem('is_active', array(
+            'label' => Mage::helper('productseller')->__('Change Is Active'),
+            'url'  => $this->getUrl('*/*/massUpdateIsActive', array('_current' => true)),
+            'additional' => array(
+                'visibility' => array(
+                    'name' => 'is_active',
+                    'type' => 'select',
+                    'class' => 'required-entry',
+                    'label' => Mage::helper('productseller')->__('Active'),
+                    'values' => $statuses
+                )
+            )
+        ));
+
+        return $this;
     }
 }

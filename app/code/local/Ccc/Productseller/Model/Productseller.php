@@ -6,4 +6,13 @@ class Ccc_Productseller_Model_Productseller extends Mage_Core_Model_Abstract
         // echo 1;
         $this->_init('ccc_productseller/productseller');
     }
+
+    protected function _beforeSave()
+    {
+
+        // $this->addData(['updated_date' => date('d-m-Y')]);
+        if (!isset($this->getData()['created_at'])) {
+            $this->addData(['created_at' => date('d-m-Y')]);
+        }
+    }
 }

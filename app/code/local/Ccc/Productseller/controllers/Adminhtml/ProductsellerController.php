@@ -10,16 +10,6 @@ class Ccc_Productseller_Adminhtml_ProductsellerController extends Mage_Adminhtml
 
     }
 
-    // public function indexAction()
-    // {
-    //     $this->_title($this->__('Productseller'))->_title($this->__('Manage Productsellers'));
-    //     $this->loadLayout();
-    //     $this->_setActiveMenu('productseller/manage');
-    //     $this->_addContent($this->getLayout()->createBlock('productseller/adminhtml_productseller'));
-    //     $this->renderLayout();
-    // }
-
-
     public function indexAction()
     {
         $this->_title($this->__('ProductSeller'));
@@ -31,50 +21,6 @@ class Ccc_Productseller_Adminhtml_ProductsellerController extends Mage_Adminhtml
     {
         $this->_forward('edit');
     }
-
-    // public function editAction()
-    // {
-    //     // echo 11;
-    //     $this->_title($this->__('Productseller'));
-
-    //     // 1. Get ID and create model
-    //     $id = $this->getRequest()->getParam('id');
-    //     $model = Mage::getModel('ccc_productseller/productseller');
-
-    //     // 2. Initial checking
-    //     if ($id) {
-    //         $model->load($id);
-    //         if (!$model->getId()) {
-    //             Mage::getSingleton('adminhtml/session')->addError(
-    //                 Mage::helper('productseller')->__('This Seller no longer exists.')
-    //             );
-    //             $this->_redirect('*/*/');
-    //             return;
-    //         }
-    //     }
-
-    //     $this->_title($model->getId() ? $model->getTitle() : $this->__('New Seller'));
-
-    //     // 3. Set entered data if was error when we do save
-    //     $data = Mage::getSingleton('adminhtml/session')->getFormData(true);
-    //     if (!empty($data)) {
-    //         $model->setData($data);
-    //     }
-
-    //     // 4. Register model to use later in blocks
-    //     Mage::register('ccc_productseller', $model);
-
-    //     // 5. Build edit form
-    //     $this->_initAction()
-    //         ->_addBreadcrumb(
-    //             $id ? Mage::helper('banner')->__('Edit Seller')
-    //             : Mage::helper('banner')->__('New Seller'),
-    //             $id ? Mage::helper('banner')->__('Edit Seller')
-    //             : Mage::helper('banner')->__('New Seller')
-    //         );
-
-    //     $this->renderLayout();
-    // }
 
     public function editAction()
     {
@@ -112,13 +58,13 @@ class Ccc_Productseller_Adminhtml_ProductsellerController extends Mage_Adminhtml
         Mage::register('ccc_productseller', $model);
 
         // 5. Build edit form
-        $this->_initAction();
-            // ->_addBreadcrumb(
-            //     $id ? Mage::helper('productseller')->__('Edit seller')
-            //     : Mage::helper('productseller')->__('New seller'),
-            //     $id ? Mage::helper('productseller')->__('Edit seller')
-            //     : Mage::helper('productseller')->__('New seller')
-            // );
+        $this->_initAction()
+            ->_addBreadcrumb(
+                $id ? Mage::helper('productseller')->__('Edit seller')
+                : Mage::helper('productseller')->__('New seller'),
+                $id ? Mage::helper('productseller')->__('Edit seller')
+                : Mage::helper('productseller')->__('New seller')
+            );
             // echo 
         $this->renderLayout();
     }
@@ -137,7 +83,7 @@ class Ccc_Productseller_Adminhtml_ProductsellerController extends Mage_Adminhtml
                 return;
             }
 
-            // init model and set data
+            $data['updated_date'] = date('d-m-Y');
 
             $model->setData($data);
 
@@ -224,6 +170,31 @@ class Ccc_Productseller_Adminhtml_ProductsellerController extends Mage_Adminhtml
         }
         // var_dump($aclResource);
         return Mage::getSingleton('admin/session')->isAllowed($aclResource);
+    }
+
+    public function massUpdateIsActiveAction() {
+        $sellerIds     = (array)$this->getRequest()->getParam('seller_ids');
+        $IsActive     = (int)$this->getRequest()->getParam('is_active');
+
+        try {
+            foreach ($sellerIds as $sellerId) {
+                $sellerId = Mage::getModel('ccc_productseller/productseller')->load($sellerId);
+                $sellerId->setIsActive($IsActive);
+                $sellerId->save();
+            }
+        }
+        catch (Mage_Core_Model_Exception $e) {
+            $this->_getSession()->addError($e->getMessage());
+        } catch (Mage_Core_Exception $e) {
+            $this->_getSession()->addError($e->getMessage());
+        } catch (Exception $e) {
+            $this->_getSession()
+                ->addException($e, $this->__('An error occurred while updating the product(s) status.'));
+        }
+
+        // $this->_redirect('*/*/', array('store'=> $storeId));
+
+        $this->_redirect('*/*/');
     }
 
 }
