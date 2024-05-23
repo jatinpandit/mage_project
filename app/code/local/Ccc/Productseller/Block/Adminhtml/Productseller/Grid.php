@@ -68,12 +68,14 @@ class Ccc_Productseller_Block_Adminhtml_Productseller_Grid extends Mage_Adminhtm
         $this->addColumn('created_at', array(
             'header' => 'Created At',
             'align' => 'left',
-            'index' => 'created_at'
+            'index' => 'created_at',
+            'type' => 'date'
         ));
         $this->addColumn('updated_date', array(
             'header' => 'Updated Date',
             'align' => 'left',
-            'index' => 'updated_date'
+            'index' => 'updated_date',
+            'type' => 'date'
         ));
 
         return parent::_prepareColumns();

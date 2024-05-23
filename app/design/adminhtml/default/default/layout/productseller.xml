@@ -15,6 +15,14 @@
         </reference>
     </adminhtml_productseller_edit>
     <adminhtml_report_index>
+        <!-- <reference name="head">
+            <action method="addJs">
+              <script>productseller/productseller.js</script> 
+            </action>
+            <action method="addJs">
+                <script>productseller/jquery-3.7.1.min.js</script> 
+            </action>
+        </reference> -->
         <reference name="content">
             <block type="productseller/adminhtml_report" name="seller_report"/>
         </reference>

@@ -83,7 +83,7 @@ class Ccc_Productseller_Adminhtml_ProductsellerController extends Mage_Adminhtml
                 return;
             }
 
-            $data['updated_date'] = date('d-m-Y');
+            // $data['updated_date'] = date('d-m-Y');
 
             $model->setData($data);
 

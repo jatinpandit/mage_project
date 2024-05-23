@@ -1,3 +1,37 @@
 <?php
-
+$sellers = $this->getSeller();
 ?>
+<div id="report-container">
+    <select name="seller" id="seller">
+        <option value="">Select Seller</option>
+        <?php foreach ($sellers as $id => $name): ?>
+            <option value="<?php echo $id; ?>"><?php echo $this->escapeHtml($name); ?></option>
+        <?php endforeach; ?>
+    </select>
+    <button id="load-report" type="button">Load Report</button>
+    <div id="products-grid"></div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+    jQuery.noConflict();
+    jQuery(document).ready(function($) {
+        $('#load-report').on('click', function() {
+            var sellerId = $('#seller').val();
+            $.ajax({
+                url: '<?php echo Mage::getUrl('*/*/loadProducts'); ?>',
+                type: 'POST',
+                data: { seller_id: sellerId },
+                success: function(response) {
+                    $('#products-grid').html(response);
+                },
+                error: function() {
+                    alert('There was an error loading the report.');
+                }
+            });
+        });
+    });
+</script>
+

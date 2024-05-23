@@ -2,6 +2,85 @@
 
 class Ccc_Productseller_Block_Adminhtml_Productgrid extends Mage_Adminhtml_Block_Catalog_Product_Grid
 {
+    protected function _prepareCollection()
+    {
+        $store = $this->_getStore();
+        $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToSelect('sku')
+            ->addAttributeToSelect('name')
+            ->addAttributeToSelect('seller_id')
+            ->addAttributeToSelect('attribute_set_id')
+            ->addAttributeToSelect('type_id');
+
+        // $collection = Mage::getResourceModel($this->_getCollectionClass());
+        
+        if (Mage::helper('catalog')->isModuleEnabled('Mage_CatalogInventory')) {
+            $collection->joinField(
+                'qty',
+                'cataloginventory/stock_item',
+                'qty',
+                'product_id=entity_id',
+                '{{table}}.stock_id=1',
+                'left'
+            );
+        }
+        if ($store->getId()) {
+            //$collection->setStoreId($store->getId());
+            $adminStore = Mage_Core_Model_App::ADMIN_STORE_ID;
+            $collection->addStoreFilter($store);
+            $collection->joinAttribute(
+                'name',
+                'catalog_product/name',
+                'entity_id',
+                null,
+                'inner',
+                $adminStore
+            );
+            $collection->joinAttribute(
+                'custom_name',
+                'catalog_product/name',
+                'entity_id',
+                null,
+                'inner',
+                $store->getId()
+            );
+            $collection->joinAttribute(
+                'status',
+                'catalog_product/status',
+                'entity_id',
+                null,
+                'inner',
+                $store->getId()
+            );
+            $collection->joinAttribute(
+                'visibility',
+                'catalog_product/visibility',
+                'entity_id',
+                null,
+                'inner',
+                $store->getId()
+            );
+            $collection->joinAttribute(
+                'price',
+                'catalog_product/price',
+                'entity_id',
+                null,
+                'left',
+                $store->getId()
+            );
+        } else {
+            $collection->addAttributeToSelect('price');
+            $collection->joinAttribute('status', 'catalog_product/status', 'entity_id', null, 'inner');
+            $collection->joinAttribute('seller_id', 'catalog_product/seller_id', 'entity_id', null, 'left');
+            $collection->joinAttribute('visibility', 'catalog_product/visibility', 'entity_id', null, 'inner');
+        }
+
+        $this->setCollection($collection);
+
+        parent::_prepareCollection();
+        $this->getCollection()->addWebsiteNamesToResult();
+        return $this;
+    }
     protected function _prepareColumns()
     {
         $this->addColumn('entity_id',
@@ -54,7 +133,8 @@ class Ccc_Productseller_Block_Adminhtml_Productgrid extends Mage_Adminhtml_Block
             'width' => '100px',
             'index' => 'seller_id',
             'type' => 'text',
-            'renderer' => 'productseller/adminhtml_renderer_seller',
+            'options' => Mage::helper('productseller')->getSellerOptions()
+            // 'renderer' => 'productseller/adminhtml_renderer_seller',
         ));
 
         $this->addColumn('sku',
