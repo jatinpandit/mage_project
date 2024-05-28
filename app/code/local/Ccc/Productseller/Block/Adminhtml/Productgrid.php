@@ -71,7 +71,7 @@ class Ccc_Productseller_Block_Adminhtml_Productgrid extends Mage_Adminhtml_Block
         } else {
             $collection->addAttributeToSelect('price');
             $collection->joinAttribute('status', 'catalog_product/status', 'entity_id', null, 'inner');
-            $collection->joinAttribute('seller_id', 'catalog_product/seller_id', 'entity_id', null, 'left');
+            $collection->joinAttribute('seller_id', 'catalog_product/seller_id', 'entity_id', null, 'left   ');
             $collection->joinAttribute('visibility', 'catalog_product/visibility', 'entity_id', null, 'inner');
         }
 
@@ -129,10 +129,10 @@ class Ccc_Productseller_Block_Adminhtml_Productgrid extends Mage_Adminhtml_Block
         ));
 
         $this->addColumn('seller_id', array(
-            'header' => Mage::helper('catalog')->__('Seller'),
+            'header' => Mage::helper('catalog')->__('Seller Company'),
             'width' => '100px',
             'index' => 'seller_id',
-            'type' => 'text',
+            'type' => 'options',
             'options' => Mage::helper('productseller')->getSellerOptions()
             // 'renderer' => 'productseller/adminhtml_renderer_seller',
         ));

@@ -64,6 +64,7 @@
             <adminhtml>
                 <rewrite>
                     <catalog_product_grid>Ccc_Productseller_Block_Adminhtml_Productgrid</catalog_product_grid>
+                    <catalog_product>Ccc_Productseller_Block_Adminhtml_Productcontainer</catalog_product>
                 </rewrite>
             </adminhtml>
         </blocks>

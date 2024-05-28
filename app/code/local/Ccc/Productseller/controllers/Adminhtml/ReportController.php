@@ -30,10 +30,11 @@ class Ccc_Productseller_Adminhtml_ReportController extends Mage_Adminhtml_Contro
             // echo "<pre>";
             $entity = $readConnection->fetchAll($entityId);
             $model = Mage::getModel('catalog/product');
+            $response = [];
             foreach ($entity as $Ids) {
-                $product = $model->load($Ids['entity_id']);
-                return ($product."<br>");
+                $response[] = $model->load($Ids['entity_id'])->getData();
             }
+            $this->getResponse()->setBody(json_encode($response));
         } else {
             $this->getResponse()->setBody('No seller selected.');
         }

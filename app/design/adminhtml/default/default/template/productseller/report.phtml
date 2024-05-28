@@ -9,29 +9,47 @@ $sellers = $this->getSeller();
         <?php endforeach; ?>
     </select>
     <button id="load-report" type="button">Load Report</button>
-    <div id="products-grid"></div>
+    <div id="products-grid" style="border: 1px;"></div>
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script type="text/javascript">
-    jQuery.noConflict();
-    jQuery(document).ready(function($) {
-        $('#load-report').on('click', function() {
-            var sellerId = $('#seller').val();
-            $.ajax({
-                url: '<?php echo Mage::getUrl('*/*/loadProducts'); ?>',
-                type: 'POST',
-                data: { seller_id: sellerId },
-                success: function(response) {
-                    $('#products-grid').html(response);
-                },
-                error: function() {
-                    alert('There was an error loading the report.');
+    document.observe('dom:loaded', function () {
+
+        $('load-report').observe('click', function () {
+            var sellerId = $F('seller');
+            new Ajax.Request('<?php echo Mage::getUrl('*/*/loadProducts'); ?>', {
+                parameters: { seller_id: sellerId },
+                post: 'POST',
+                onSuccess: function (response) {
+                    // console.log(JSON.parse(response.responseText));
+                    $('products-grid').innerHTML = "";
+                    var data = JSON.parse(response.responseText);
+                    var table = new Element('table');
+                    table.border="1";
+                    var thead = new Element('thead');
+                    var headerRow = new Element('tr');
+                    ['Id','Name', 'Sku'].forEach(function (header) {
+                        headerRow.insert(new Element('th').update(header));
+                    });
+                    thead.insert(headerRow);
+                    table.insert(thead);
+
+                    var tbody = new Element('tbody');
+                    data.forEach(function (item) {
+                        var row = new Element('tr');
+                        var reportType = (item.report_type == 1) ? 'Product' : 'Customer';
+                        // row.insert(new Element('td').input(checkbox));
+                        row.insert(new Element('td').update(item.entity_id));
+                        row.insert(new Element('td').update(item.name));
+                        row.insert(new Element('td').update(item.sku));
+                        tbody.insert(row);
+                    });
+                    table.insert(tbody);
+                    $('products-grid').insert(table);
+
                 }
-            });
-        });
+            })
+        })
     });
 </script>
-

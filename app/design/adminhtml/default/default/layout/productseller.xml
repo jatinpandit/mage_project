@@ -6,7 +6,7 @@
         </reference>
     </adminhtml_productseller_index>
     <adminhtml_productseller_new>
-        <update handle="adminhtml_productseller_edit"/>
+        <update handle="adminhtml_productseller_edit" />
     </adminhtml_productseller_new>
     <adminhtml_productseller_edit>
         <update handle="editor" />
@@ -18,13 +18,17 @@
         <!-- <reference name="head">
             <action method="addJs">
               <script>productseller/productseller.js</script> 
+            </action> -->
+        <!-- <reference name="head"> -->
+            <!-- <action method="addJs">
+                <script>lib/jquery/no-conflict.js</script>
             </action>
             <action method="addJs">
-                <script>productseller/jquery-3.7.1.min.js</script> 
-            </action>
-        </reference> -->
+                <script>lib/jquery/jquery-1.10.2.js</script>
+            </action> -->
+        <!-- </reference> -->
         <reference name="content">
-            <block type="productseller/adminhtml_report" name="seller_report"/>
+            <block type="productseller/adminhtml_report" name="seller_report" />
         </reference>
     </adminhtml_report_index>
 </layout>
