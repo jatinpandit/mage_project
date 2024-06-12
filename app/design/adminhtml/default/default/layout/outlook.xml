@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+    <adminhtml_outlook_index>
+        <reference name="content">
+            <block type="outlook/adminhtml_outlook" name="outlook" />
+        </reference>
+    </adminhtml_outlook_index>
+    <adminhtml_outlook_new>
+        <update handle="adminhtml_outlook_edit" />
+    </adminhtml_outlook_new>
+    <adminhtml_outlook_edit>
+        <update handle="editor" />
+        <reference name="content">
+            <block type="outlook/adminhtml_outlook_edit" name="outlook_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="outlook/adminhtml_outlook_edit_tabs" name="adminhtml_outlook_edit_tabs">
+                <block type="outlook/adminhtml_outlook_edit_tab_main"
+                    name="adminhtml_outlook_edit_tab_main" />
+                <block type="outlook/adminhtml_outlook_edit_tab_event"
+                    name="adminhtml_outlook_edit_tab_event" />
+                <action method="addTab">
+                    <name>main_section</name>
+                    <block>adminhtml_outlook_edit_tab_main</block>
+                </action>
+                <action method="addTab">
+                    <name>event_section</name>
+                    <block>adminhtml_outlook_edit_tab_event</block>
+                </action>
+            </block>
+        </reference>
+    </adminhtml_outlook_edit>
+</layout>
