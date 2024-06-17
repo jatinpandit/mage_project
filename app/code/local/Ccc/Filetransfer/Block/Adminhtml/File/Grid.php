@@ -47,14 +47,23 @@ class Ccc_Filetransfer_Block_Adminhtml_File_Grid extends Mage_Adminhtml_Block_Wi
         );
 
 
+        // $this->addColumn(
+        //     'user',
+        //     array(
+        //         'header' => Mage::helper('filetransfer')->__('User'),
+        //         'align' => 'left',
+        //         'index' => 'user'
+        //     )
+        // );
+
         $this->addColumn(
-            'user',
+            'modified_date',
             array(
-                'header' => Mage::helper('filetransfer')->__('User'),
+                'header' => 'Modified At',
                 'align' => 'left',
-                'index' => 'user'
+                'index' => 'modified_date'
             )
-        );
+            );
 
         $this->addColumn(
             'created_at',

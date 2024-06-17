@@ -377,3 +377,177 @@ Stack trace:
 #37 C:\xampp\htdocs\1SBMagento\app\Mage.php(686): Mage_Core_Model_App->run(Array)
 #38 C:\xampp\htdocs\1SBMagento\index.php(83): Mage::run('', 'store')
 #39 {main}
+2024-06-17T09:50:53+00:00 ERR (3): 
+Mage_Core_Exception: Invalid block type: Ccc_Ticket_Block_Adminhtml_Ticket_Grid in C:\xampp\htdocs\1SBMagento\app\Mage.php:598
+Stack trace:
+#0 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(495): Mage::throwException('Invalid block t...')
+#1 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(437): Mage_Core_Model_Layout->_getBlockInstance('Ccc_Ticket_Bloc...', Array)
+#2 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Block\Widget\Grid\Container.php(66): Mage_Core_Model_Layout->createBlock('ticket/adminhtm...', 'adminhtml_ticke...')
+#3 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Block\Abstract.php(297): Mage_Adminhtml_Block_Widget_Grid_Container->_prepareLayout()
+#4 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(456): Mage_Core_Block_Abstract->setLayout(Object(Mage_Core_Model_Layout))
+#5 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(472): Mage_Core_Model_Layout->createBlock('ticket/adminhtm...', 'ticket')
+#6 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(239): Mage_Core_Model_Layout->addBlock('ticket/adminhtm...', 'ticket')
+#7 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(205): Mage_Core_Model_Layout->_generateBlock(Object(Mage_Core_Model_Layout_Element), Object(Mage_Core_Model_Layout_Element))
+#8 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(210): Mage_Core_Model_Layout->generateBlocks(Object(Mage_Core_Model_Layout_Element))
+#9 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(344): Mage_Core_Model_Layout->generateBlocks()
+#10 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(269): Mage_Core_Controller_Varien_Action->generateLayoutBlocks()
+#11 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Controller\Action.php(285): Mage_Core_Controller_Varien_Action->loadLayout(NULL, true, true)
+#12 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(7): Mage_Adminhtml_Controller_Action->loadLayout()
+#13 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(14): Ccc_Ticket_Adminhtml_TicketController->_initAction()
+#14 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(418): Ccc_Ticket_Adminhtml_TicketController->indexAction()
+#15 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Router\Standard.php(254): Mage_Core_Controller_Varien_Action->dispatch('index')
+#16 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#17 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\App.php(365): Mage_Core_Controller_Varien_Front->dispatch()
+#18 C:\xampp\htdocs\1SBMagento\app\Mage.php(686): Mage_Core_Model_App->run(Array)
+#19 C:\xampp\htdocs\1SBMagento\index.php(83): Mage::run('', 'store')
+#20 {main}
+2024-06-17T09:51:20+00:00 ERR (3): 
+Mage_Core_Exception: Invalid block type: Ccc_Ticket_Block_Adminhtml_Ticket_Grid in C:\xampp\htdocs\1SBMagento\app\Mage.php:598
+Stack trace:
+#0 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(495): Mage::throwException('Invalid block t...')
+#1 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(437): Mage_Core_Model_Layout->_getBlockInstance('Ccc_Ticket_Bloc...', Array)
+#2 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Block\Widget\Grid\Container.php(66): Mage_Core_Model_Layout->createBlock('ticket/adminhtm...', 'adminhtml_ticke...')
+#3 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Block\Abstract.php(297): Mage_Adminhtml_Block_Widget_Grid_Container->_prepareLayout()
+#4 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(456): Mage_Core_Block_Abstract->setLayout(Object(Mage_Core_Model_Layout))
+#5 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(472): Mage_Core_Model_Layout->createBlock('ticket/adminhtm...', 'ticket')
+#6 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(239): Mage_Core_Model_Layout->addBlock('ticket/adminhtm...', 'ticket')
+#7 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(205): Mage_Core_Model_Layout->_generateBlock(Object(Mage_Core_Model_Layout_Element), Object(Mage_Core_Model_Layout_Element))
+#8 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(210): Mage_Core_Model_Layout->generateBlocks(Object(Mage_Core_Model_Layout_Element))
+#9 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(344): Mage_Core_Model_Layout->generateBlocks()
+#10 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(269): Mage_Core_Controller_Varien_Action->generateLayoutBlocks()
+#11 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Controller\Action.php(285): Mage_Core_Controller_Varien_Action->loadLayout(NULL, true, true)
+#12 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(7): Mage_Adminhtml_Controller_Action->loadLayout()
+#13 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(14): Ccc_Ticket_Adminhtml_TicketController->_initAction()
+#14 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(418): Ccc_Ticket_Adminhtml_TicketController->indexAction()
+#15 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Router\Standard.php(254): Mage_Core_Controller_Varien_Action->dispatch('index')
+#16 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#17 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\App.php(365): Mage_Core_Controller_Varien_Front->dispatch()
+#18 C:\xampp\htdocs\1SBMagento\app\Mage.php(686): Mage_Core_Model_App->run(Array)
+#19 C:\xampp\htdocs\1SBMagento\index.php(83): Mage::run('', 'store')
+#20 {main}
+2024-06-17T09:51:28+00:00 ERR (3): 
+Mage_Core_Exception: Invalid block type: Ccc_Ticket_Block_Ticket_Grid in C:\xampp\htdocs\1SBMagento\app\Mage.php:598
+Stack trace:
+#0 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(495): Mage::throwException('Invalid block t...')
+#1 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(437): Mage_Core_Model_Layout->_getBlockInstance('Ccc_Ticket_Bloc...', Array)
+#2 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Block\Widget\Grid\Container.php(66): Mage_Core_Model_Layout->createBlock('ticket/ticket_g...', 'ticket.grid')
+#3 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Block\Abstract.php(297): Mage_Adminhtml_Block_Widget_Grid_Container->_prepareLayout()
+#4 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(456): Mage_Core_Block_Abstract->setLayout(Object(Mage_Core_Model_Layout))
+#5 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(472): Mage_Core_Model_Layout->createBlock('ticket/adminhtm...', 'ticket')
+#6 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(239): Mage_Core_Model_Layout->addBlock('ticket/adminhtm...', 'ticket')
+#7 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(205): Mage_Core_Model_Layout->_generateBlock(Object(Mage_Core_Model_Layout_Element), Object(Mage_Core_Model_Layout_Element))
+#8 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(210): Mage_Core_Model_Layout->generateBlocks(Object(Mage_Core_Model_Layout_Element))
+#9 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(344): Mage_Core_Model_Layout->generateBlocks()
+#10 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(269): Mage_Core_Controller_Varien_Action->generateLayoutBlocks()
+#11 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Controller\Action.php(285): Mage_Core_Controller_Varien_Action->loadLayout(NULL, true, true)
+#12 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(7): Mage_Adminhtml_Controller_Action->loadLayout()
+#13 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(14): Ccc_Ticket_Adminhtml_TicketController->_initAction()
+#14 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(418): Ccc_Ticket_Adminhtml_TicketController->indexAction()
+#15 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Router\Standard.php(254): Mage_Core_Controller_Varien_Action->dispatch('index')
+#16 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#17 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\App.php(365): Mage_Core_Controller_Varien_Front->dispatch()
+#18 C:\xampp\htdocs\1SBMagento\app\Mage.php(686): Mage_Core_Model_App->run(Array)
+#19 C:\xampp\htdocs\1SBMagento\index.php(83): Mage::run('', 'store')
+#20 {main}
+2024-06-17T09:51:35+00:00 ERR (3): 
+Mage_Core_Exception: Invalid block type: Ccc_Ticket_Block_Adminhtml_Ticket_Grid in C:\xampp\htdocs\1SBMagento\app\Mage.php:598
+Stack trace:
+#0 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(495): Mage::throwException('Invalid block t...')
+#1 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(437): Mage_Core_Model_Layout->_getBlockInstance('Ccc_Ticket_Bloc...', Array)
+#2 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Block\Widget\Grid\Container.php(66): Mage_Core_Model_Layout->createBlock('ticket/adminhtm...', 'adminhtml_ticke...')
+#3 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Block\Abstract.php(297): Mage_Adminhtml_Block_Widget_Grid_Container->_prepareLayout()
+#4 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(456): Mage_Core_Block_Abstract->setLayout(Object(Mage_Core_Model_Layout))
+#5 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(472): Mage_Core_Model_Layout->createBlock('ticket/adminhtm...', 'ticket')
+#6 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(239): Mage_Core_Model_Layout->addBlock('ticket/adminhtm...', 'ticket')
+#7 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(205): Mage_Core_Model_Layout->_generateBlock(Object(Mage_Core_Model_Layout_Element), Object(Mage_Core_Model_Layout_Element))
+#8 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(210): Mage_Core_Model_Layout->generateBlocks(Object(Mage_Core_Model_Layout_Element))
+#9 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(344): Mage_Core_Model_Layout->generateBlocks()
+#10 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(269): Mage_Core_Controller_Varien_Action->generateLayoutBlocks()
+#11 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Controller\Action.php(285): Mage_Core_Controller_Varien_Action->loadLayout(NULL, true, true)
+#12 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(7): Mage_Adminhtml_Controller_Action->loadLayout()
+#13 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(14): Ccc_Ticket_Adminhtml_TicketController->_initAction()
+#14 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(418): Ccc_Ticket_Adminhtml_TicketController->indexAction()
+#15 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Router\Standard.php(254): Mage_Core_Controller_Varien_Action->dispatch('index')
+#16 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#17 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\App.php(365): Mage_Core_Controller_Varien_Front->dispatch()
+#18 C:\xampp\htdocs\1SBMagento\app\Mage.php(686): Mage_Core_Model_App->run(Array)
+#19 C:\xampp\htdocs\1SBMagento\index.php(83): Mage::run('', 'store')
+#20 {main}
+2024-06-17T09:52:07+00:00 ERR (3): 
+Varien_Exception: Invalid method Ccc_Ticket_Block_Adminhtml_Ticket::removeButton(Array
+(
+    [0] => add
+)
+) in C:\xampp\htdocs\1SBMagento\lib\Varien\Object.php:653
+Stack trace:
+#0 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\Block\Adminhtml\Ticket.php(11): Varien_Object->__call('removeButton', Array)
+#1 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(491): Ccc_Ticket_Block_Adminhtml_Ticket->__construct(Array)
+#2 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(437): Mage_Core_Model_Layout->_getBlockInstance('Ccc_Ticket_Bloc...', Array)
+#3 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(472): Mage_Core_Model_Layout->createBlock('ticket/adminhtm...', 'ticket')
+#4 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(239): Mage_Core_Model_Layout->addBlock('ticket/adminhtm...', 'ticket')
+#5 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(205): Mage_Core_Model_Layout->_generateBlock(Object(Mage_Core_Model_Layout_Element), Object(Mage_Core_Model_Layout_Element))
+#6 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(210): Mage_Core_Model_Layout->generateBlocks(Object(Mage_Core_Model_Layout_Element))
+#7 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(344): Mage_Core_Model_Layout->generateBlocks()
+#8 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(269): Mage_Core_Controller_Varien_Action->generateLayoutBlocks()
+#9 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Controller\Action.php(285): Mage_Core_Controller_Varien_Action->loadLayout(NULL, true, true)
+#10 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(7): Mage_Adminhtml_Controller_Action->loadLayout()
+#11 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(14): Ccc_Ticket_Adminhtml_TicketController->_initAction()
+#12 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(418): Ccc_Ticket_Adminhtml_TicketController->indexAction()
+#13 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Router\Standard.php(254): Mage_Core_Controller_Varien_Action->dispatch('index')
+#14 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#15 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\App.php(365): Mage_Core_Controller_Varien_Front->dispatch()
+#16 C:\xampp\htdocs\1SBMagento\app\Mage.php(686): Mage_Core_Model_App->run(Array)
+#17 C:\xampp\htdocs\1SBMagento\index.php(83): Mage::run('', 'store')
+#18 {main}
+2024-06-17T09:52:12+00:00 ERR (3): 
+Varien_Exception: Invalid method Ccc_Ticket_Block_Adminhtml_Ticket::removeButton(Array
+(
+    [0] => add
+)
+) in C:\xampp\htdocs\1SBMagento\lib\Varien\Object.php:653
+Stack trace:
+#0 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\Block\Adminhtml\Ticket.php(11): Varien_Object->__call('removeButton', Array)
+#1 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(491): Ccc_Ticket_Block_Adminhtml_Ticket->__construct(Array)
+#2 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(437): Mage_Core_Model_Layout->_getBlockInstance('Ccc_Ticket_Bloc...', Array)
+#3 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(472): Mage_Core_Model_Layout->createBlock('ticket/adminhtm...', 'ticket')
+#4 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(239): Mage_Core_Model_Layout->addBlock('ticket/adminhtm...', 'ticket')
+#5 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(205): Mage_Core_Model_Layout->_generateBlock(Object(Mage_Core_Model_Layout_Element), Object(Mage_Core_Model_Layout_Element))
+#6 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(210): Mage_Core_Model_Layout->generateBlocks(Object(Mage_Core_Model_Layout_Element))
+#7 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(344): Mage_Core_Model_Layout->generateBlocks()
+#8 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(269): Mage_Core_Controller_Varien_Action->generateLayoutBlocks()
+#9 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Controller\Action.php(285): Mage_Core_Controller_Varien_Action->loadLayout(NULL, true, true)
+#10 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(7): Mage_Adminhtml_Controller_Action->loadLayout()
+#11 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(14): Ccc_Ticket_Adminhtml_TicketController->_initAction()
+#12 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(418): Ccc_Ticket_Adminhtml_TicketController->indexAction()
+#13 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Router\Standard.php(254): Mage_Core_Controller_Varien_Action->dispatch('index')
+#14 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#15 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\App.php(365): Mage_Core_Controller_Varien_Front->dispatch()
+#16 C:\xampp\htdocs\1SBMagento\app\Mage.php(686): Mage_Core_Model_App->run(Array)
+#17 C:\xampp\htdocs\1SBMagento\index.php(83): Mage::run('', 'store')
+#18 {main}
+2024-06-17T09:52:43+00:00 ERR (3): 
+Varien_Exception: Invalid method Ccc_Ticket_Block_Adminhtml_Ticket::removeButton(Array
+(
+    [0] => add
+)
+) in C:\xampp\htdocs\1SBMagento\lib\Varien\Object.php:653
+Stack trace:
+#0 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\Block\Adminhtml\Ticket.php(11): Varien_Object->__call('removeButton', Array)
+#1 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(491): Ccc_Ticket_Block_Adminhtml_Ticket->__construct(Array)
+#2 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(437): Mage_Core_Model_Layout->_getBlockInstance('Ccc_Ticket_Bloc...', Array)
+#3 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(472): Mage_Core_Model_Layout->createBlock('ticket/adminhtm...', 'ticket')
+#4 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(239): Mage_Core_Model_Layout->addBlock('ticket/adminhtm...', 'ticket')
+#5 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(205): Mage_Core_Model_Layout->_generateBlock(Object(Mage_Core_Model_Layout_Element), Object(Mage_Core_Model_Layout_Element))
+#6 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\Layout.php(210): Mage_Core_Model_Layout->generateBlocks(Object(Mage_Core_Model_Layout_Element))
+#7 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(344): Mage_Core_Model_Layout->generateBlocks()
+#8 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(269): Mage_Core_Controller_Varien_Action->generateLayoutBlocks()
+#9 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Adminhtml\Controller\Action.php(285): Mage_Core_Controller_Varien_Action->loadLayout(NULL, true, true)
+#10 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(7): Mage_Adminhtml_Controller_Action->loadLayout()
+#11 C:\xampp\htdocs\1SBMagento\app\code\local\Ccc\Ticket\controllers\Adminhtml\TicketController.php(14): Ccc_Ticket_Adminhtml_TicketController->_initAction()
+#12 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Action.php(418): Ccc_Ticket_Adminhtml_TicketController->indexAction()
+#13 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Router\Standard.php(254): Mage_Core_Controller_Varien_Action->dispatch('index')
+#14 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Controller\Varien\Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#15 C:\xampp\htdocs\1SBMagento\app\code\core\Mage\Core\Model\App.php(365): Mage_Core_Controller_Varien_Front->dispatch()
+#16 C:\xampp\htdocs\1SBMagento\app\Mage.php(686): Mage_Core_Model_App->run(Array)
+#17 C:\xampp\htdocs\1SBMagento\index.php(83): Mage::run('', 'store')
+#18 {main}

@@ -50,6 +50,15 @@
                     <file>
                         <table>ccc_filetransfer_file</table>
                     </file>
+                    <master>
+                        <table>ccc_filetransfer_master</table>
+                    </master>
+                    <new>
+                        <table>ccc_filetransfer_new</table>
+                    </new>
+                    <discontinued>
+                        <table>ccc_filetransfer_discontinued</table>
+                    </discontinued>
                 </entities>
             </filetransfer_resource>
         </models>

@@ -123,32 +123,32 @@ class Ccc_Filetransfer_Adminhtml_FiletransferController extends Mage_Adminhtml_C
      */
     public function deleteAction()
     {
-        // check if we know what should be deleted
+        
         if ($id = $this->getRequest()->getParam('config_id')) {
             $name = '';
             try {
-                // init model and delete
+                
                 $model = Mage::getModel('filetransfer/configuration');
                 $model->load($id);
                 $name = $model->getUserName();
                 $model->delete();
-                // display success message
+                
                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('filetransfer')->__('The config has been deleted.'));
-                // go to grid
+                
                 $this->_redirect('*/*/');
                 return;
 
             } catch (Exception $e) {
-                // display error message
+                
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                // go back to edit form
+                
                 $this->_redirect('*/*/edit', array('config_id' => $id));
                 return;
             }
         }
-        // display error message
+ 
         Mage::getSingleton('adminhtml/session')->addError(Mage::helper('filetransfer')->__('Unable to find a config to delete.'));
-        // go to grid
+        
         $this->_redirect('*/*/');
     }
 
@@ -174,4 +174,84 @@ class Ccc_Filetransfer_Adminhtml_FiletransferController extends Mage_Adminhtml_C
         $zipModel->extractFile($filename, $ConfigId);
         $this->_redirect('*/*/renderfile');
     }
+
+    public function exportAction()
+    {
+        echo "<pre>";
+        $filename = $this->getRequest()->getParam('filename');
+        $filename = str_replace('_','/',$filename);
+        $filePath = Mage::getBaseDir('var') . DS . 'filetransfer' . $filename;
+        // echo $filename;
+
+        $xml = simplexml_load_file($filePath);
+        // print_r($xml);
+        $csvpath = Mage::getBaseDir('var').DS.'filetransfer'.DS.'csv'.DS.pathinfo($filename, PATHINFO_FILENAME).'.csv' ;
+        // echo $csvpath;
+
+        $rows = Mage::helper('filetransfer')->getRow();
+
+        // print_r($rows);
+
+        $xmlData = $this->readXml($xml, $rows);
+        // print_r($xmlData);die;
+        $this->writeCsv($xmlData, $csvpath);
+        $this->_redirect('*/*/renderfile');
+
+    }
+
+    public function readXml($xml, $rows)
+    {
+        $result = [];
+
+        foreach($xml->xpath('//items/item') as $item){
+            $data = [];
+            foreach($rows as $row){
+                $attribute = $row['attribute'];
+                $parts = explode('.', $row['parts']);
+                // print_r($attribute);
+                // print_r($parts);
+
+                $currentElement = $item;
+
+                for($i = 2; $i < count($parts); $i++){
+                    $currentElement = $currentElement->{$parts[$i]};
+                }
+
+                if($row['attribute'] == 'itemNumber'){
+                    $values = [];
+                    foreach($currentElement as $element){
+                        $values[] = (string)$element[$attribute];
+                    }
+                    // print_r($values);die;
+                    $data['partNumber'] = implode(',',$values);
+                } else{
+                    $data[$parts[count($parts)-1]] = (string)$currentElement[$attribute];
+                }
+            }
+            $result[] = $data;
+        }
+        return $result;
+    }
+
+    public function writeCsv($data, $csvFile)
+    {
+        $filePaths = [];
+        $csv = '';
+
+        $headerRow = array_keys($data[0]);
+        $csv .= implode(',', $headerRow) . "\n";
+
+        foreach ($data as $row) {
+            $csvRow = array_map(function ($value) {
+                return '"' . str_replace('"', '""', $value) . '"';
+            }, $row);
+            $csv .= implode(',', $csvRow) . "\n";
+        }
+
+        file_put_contents($csvFile, $csv);
+
+        return $filePaths;  
+    }
+
+
 }

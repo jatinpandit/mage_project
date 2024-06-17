@@ -1,0 +1,235 @@
+<?php
+$userId = $this->getUser();
+$users = $this->getAllUsers();
+$status = $this->getStatus();
+// print_r($status->getData());
+
+?>
+<div class="nav-bar">
+    <?php echo $this->getMenuLevel($this->getMenuArray()); ?>
+
+    <a id="page-ticket-link" href="javascript:void(0);"
+        class="create-ticket-link"><button><?php echo $this->__('Create Ticket') ?></button></a>
+</div>
+
+<!-- Modal -->
+<div id="create-ticket-modal" class="modal">
+    <div class="modal-content">
+        <h2>Create Ticket</h2>
+        <span class="close">&times;</span>
+        <form id="ticket-form" action="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/ticket/save') ?>"
+            method="post">
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <div>
+                <label for="title"><?php echo $this->__('Title') ?></label>
+                <input type="text" name="title" id="title" required>
+            </div>
+            <div>
+                <label for="description"><?php echo $this->__('Description') ?></label>
+                <div id="description-editor"></div>
+                <textarea name="description" id="description"></textarea>
+            </div>
+            <div>
+                <label for="assigned_by"><?php echo $this->__('Assign By') ?></label>
+                <select name="assigned_by" id="assigned_by" required>
+                    <option value="">--Select--</option>
+                    <?php foreach ($users as $_u): ?>
+                        <option value="<?php echo $_u->getId(); ?>" <?php echo $userId == $_u->getId() ? 'selected' : ''; ?>>
+                            <?php echo ucfirst($_u->getUsername()); ?>
+                        </option>
+
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div>
+                <label for="assigned_to"><?php echo $this->__('Assign To') ?></label>
+                <select name="assigned_to" id="assigned_to" required>
+                    <option value="">--Select--</option>
+                    <?php foreach ($users as $_u): ?>
+                        <option value="<?php echo $_u->getId() ?>"><?php echo ucfirst($_u->getUsername()); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div>
+                <label for="priority"><?php echo $this->__('Priority') ?></label>
+                <input type="number" name="priority" id="priority" required>
+            </div>
+            <div>
+                <label for="status"><?php echo $this->__('Status') ?></label>
+                <select name="status" id="status" required>
+                    <option value="">--Select--</option>
+                    <?php foreach ($status as $_s): ?>
+                        <option value="<?php echo $_s->getStatusCode() ?>"
+                            style="background-color:<?php echo $_s->getColourCode() ?>;"><?php echo $_s->getLabel() ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div>
+                <input type="submit" value="<?php echo $this->__('Submit') ?>">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var modal = document.getElementById('create-ticket-modal');
+        var ticketLink = document.querySelector('.create-ticket-link');
+        var closeBtn = document.querySelector('.close');
+        var statusSelect = document.getElementById('status_id');
+    
+        ticketLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            modal.style.display = 'block';
+        });
+
+        // Close modal
+        closeBtn.addEventListener('click', function () {
+            modal.style.display = 'none';
+        });
+
+        // Close modal if clicked outside of it
+        window.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        statusSelect.addEventListener('change', function () {
+            var selectedOption = statusSelect.options[statusSelect.selectedIndex];
+            statusSelect.style.backgroundColor = selectedOption.style.backgroundColor;
+        });
+
+        // // Sync CKEditor content to hidden textarea
+        // document.getElementById('ticket-form').addEventListener('submit', function () {
+        //     document.getElementById('description').value = descriptionEditor.getData();
+        // });
+    });
+</script>
+
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        overflow: auto;
+    }
+
+    .modal-content {
+        background-color: #ffffff;
+        margin: 10% auto;
+        text-align: left;
+        padding: 20px 30px;
+        border-radius: 8px;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 500px;
+        position: relative;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #888;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+    }
+
+    .modal form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal form div {
+        margin-bottom: 15px;
+    }
+
+    .modal label {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .modal input[type="text"],
+    .modal input[type="number"],
+    .modal textarea,
+    .modal select {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        resize: vertical;
+        transition: border-color 0.3s ease;
+    }
+
+    .modal input[type="text"]:focus,
+    .modal input[type="number"]:focus,
+    .modal textarea:focus,
+    .modal select:focus {
+        border-color: #4CAF50;
+    }
+
+    .modal input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .modal input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    .modal textarea {
+        height: 100px;
+    }
+
+    @media (max-width: 600px) {
+        .modal-content {
+            width: 90%;
+            padding: 15px;
+        }
+
+        .modal input[type="text"],
+        .modal input[type="number"],
+        .modal textarea,
+        .modal select {
+            width: calc(100% - 12px);
+        }
+    }
+</style>
