@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lauout>
     <adminhtml_ticket_index>
+        <reference name="head">
+            <action method="addJs">
+                <script>lib/jquery/jquery-1.10.2.js</script>
+            </action>
+        </reference>
         <reference name="content">
             <block type="ticket/adminhtml_ticket" name="ticket" />
         </reference>
     </adminhtml_ticket_index>
     <adminhtml_ticket_view>
+        <reference name="head">
+            <action method="addJs">
+                <script>lib/jquery/jquery-1.10.2.js</script>
+            </action>
+        </reference>
         <reference name="content">
             <block type="ticket/adminhtml_view" name="view" />
         </reference>

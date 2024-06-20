@@ -24,11 +24,11 @@ $status = $this->getStatus();
                 <label for="title"><?php echo $this->__('Title') ?></label>
                 <input type="text" name="title" id="title" required>
             </div>
-            <div>
+            
                 <label for="description"><?php echo $this->__('Description') ?></label>
                 <div id="description-editor"></div>
                 <textarea name="description" id="description"></textarea>
-            </div>
+            
             <div>
                 <label for="assigned_by"><?php echo $this->__('Assign By') ?></label>
                 <select name="assigned_by" id="assigned_by" required>
@@ -59,7 +59,7 @@ $status = $this->getStatus();
                 <select name="status" id="status" required>
                     <option value="">--Select--</option>
                     <?php foreach ($status as $_s): ?>
-                        <option value="<?php echo $_s->getStatusCode() ?>"
+                        <option value="<?php echo $_s->getCode() ?>"
                             style="background-color:<?php echo $_s->getColourCode() ?>;"><?php echo $_s->getLabel() ?>
                         </option>
                     <?php endforeach; ?>
@@ -72,12 +72,20 @@ $status = $this->getStatus();
     </div>
 </div>
 
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+
+<script>
+    CKEDITOR.replace('description', {
+        height: 150
+    });
+</script>
+
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
         var modal = document.getElementById('create-ticket-modal');
         var ticketLink = document.querySelector('.create-ticket-link');
         var closeBtn = document.querySelector('.close');
-        var statusSelect = document.getElementById('status_id');
+        var statusSelect = document.getElementById('status');
     
         ticketLink.addEventListener('click', function (event) {
             event.preventDefault();

@@ -1,15 +1,76 @@
 <?php
-$tickets = $this->getTicket();
+$tickets = $this->getTicketCollection();
 $statusModel = Mage::getModel('ticket/status');
 $userModel = Mage::getModel('admin/user');
-// var_dump($statusModel->load($tickets->getStatusId()));die;
+$filterModel = Mage::getModel('ticket/filter');
+// $c_page = $this->getCurrentPage();
+// $t_page = $this->getTotalPages();
+// // var_dump($statusModel->load($tickets->getStatusId()));die;
 ?>
+<div class="filter-button" >
+<a id="page-filter-link" href="javascript:void(0);"
+class="create-filter-link">
+    <button id="addFilter" style="margin-bottom:10px;">Add New Filter</button></a>
 
-<!DOCTYPE html>
-<html lang="en">
+    <a href="<?php echo $this->getUrl('*/*/index') ?>"> <button>Reset Filter</button></a>
+</div>
+<br>
+<div class="new-filter-button">
+    <?php foreach($filterModel->getCollection() as $f): ?>
+        <a href="<?php echo $this->getUrl('*/*/index', array('filter_id' => $f->getId())) ?>"><button><?php echo $f->getTitle() ?></button></a>
+        <?php endforeach; ?>
+</div>
+<br>
 
-<head>
-    <meta charset="UTF-8">
+<div id="create-filter-modal" class="modal">
+    <div class="modal-content">
+        <h2>Create Filter</h2>
+        <span class="close" id="closebtn">&times;</span>
+        <form id="filter-form" action="<?php echo $this->getUrl('*/*/saveFilter')?>" method="POST">
+        <?php echo $this->getBlockHtml('formkey') ?>
+        <div>
+            <label for="title">Filter Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="status">Status:</label>
+            <select multiple name="status[]" id="status">
+                <!-- <option value="">--Select--</option> -->
+                <?php foreach($statusModel->getCollection() as $s): ?>
+                    <option value="<?php echo $s->getCode() ?>"><?php echo $s->getLabel() ?></option>
+                    <?php endforeach; ?>
+            </select>
+        </div>
+        <div>
+            <label for="assigned_to">Assigned To:</label>
+            <select multiple name="assigned_to[]" id="assigned_to">
+                <?php foreach($userModel->getCollection() as $u): ?>
+                    <option value="<?php echo $u->getId() ?>"><?php echo ucfirst($u->getUsername()) ?></option>
+                    <?php endforeach; ?>
+            </select>
+        </div>
+        <div>
+            <label for="created_at">Created At(Days):</label>
+            <input type="number" name="created_at" id="created_at">
+        </div>
+        <div>
+            <label for="last_comment">Last Commented By:</label>
+            <select name="last_comment" id="last_comment">
+                <option value="">--Select--</option>
+                <?php foreach($userModel->getCollection() as $u): ?>
+                <option value="<?php echo $u->getId() ?>"><?php echo ucfirst($u->getUsername()) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div><button type="submit">Create Filter</button></div>
+
+        </form>
+    </div>
+</div>
+
+
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket Details</title>
     <style>
@@ -35,9 +96,8 @@ $userModel = Mage::getModel('admin/user');
             background-color: #f9f9f9;
         }
     </style>
-</head>
 
-<body>
+
     <h1>Ticket Details</h1>
     <table>
         <thead>
@@ -56,21 +116,273 @@ $userModel = Mage::getModel('admin/user');
         </thead>
         <tbody>
             <?php foreach ($tickets as $ticket): ?>
-                <tr style="background-color:<?php echo $statusModel->load($ticket->getStatusId())->getColourCode()?>;">
+                <tr style="background-color:<?php echo $statusModel->load($ticket->getStatus())->getColourCode()?>;">
                     <td><?php echo htmlspecialchars($ticket->getId()); ?></td>
                     <td><?php echo htmlspecialchars($ticket->getTitle()); ?></td>
-                    <td><?php echo nl2br(htmlspecialchars($ticket->getDescription())); ?></td>
+                    <td><?php echo nl2br(($ticket->getDescription())); ?></td>
                     <td><?php echo htmlspecialchars($ticket->getPriority()); ?></td>
                     <td><?php echo ucfirst(htmlspecialchars($userModel->load($ticket->getAssignedBY())->getUsername())) ?></td>
                     <td><?php echo ucfirst(htmlspecialchars($userModel->load($ticket->getAssignedTo())->getUsername())) ?></td>
                     <td><?php echo htmlspecialchars($statusModel->load($ticket->getStatus())->getLabel()); ?></td>
                     <td><?php echo htmlspecialchars($ticket->getCreatedAt()); ?></td>
                     <td><?php echo htmlspecialchars($ticket->getUpdatedAt()); ?></td>
-                    <td><a href="<?php echo $this->getUrl('*/*/view') ?>"><button>View</button></a></td>
+                    <td><a href="<?php echo $this->getUrl('*/*/view', array('ticket_id'=> $ticket->getId())) ?>"><button>View</button></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-</body>
+    <div class="custom-pagination">
+        <ul class="pagination"></ul>
+    </div>
+    <script>.custom-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
 
-</html>
+.custom-pagination .pagination {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.custom-pagination .pagination li {
+    margin: 0;
+}
+
+.custom-pagination .pagination li a {
+    display: block;
+    padding: 10px 15px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.custom-pagination .pagination li a:hover,
+.custom-pagination .pagination li a:focus {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+    outline: none;
+}
+
+.custom-pagination .pagination li.active a,
+.custom-pagination .pagination li.active a:hover,
+.custom-pagination .pagination li.active a:focus {
+    background-color: #0056b3;
+    color: #fff;
+    border-color: #0056b3;
+    cursor: default;
+}
+
+.custom-pagination .pagination li.disabled a,
+.custom-pagination .pagination li.disabled a:hover,
+.custom-pagination .pagination li.disabled a:focus {
+    background-color: #f4f4f4;
+    color: #ddd;
+    border-color: #ddd;
+    cursor: not-allowed;
+}
+
+.custom-pagination .pagination li a:focus {
+    outline: 2px solid #007bff;
+}
+
+@media (max-width: 600px) {
+    .custom-pagination .pagination li a {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+</script>
+    <script>
+        j =jQuery.noConflict();
+    function updatePagination(currentPage, totalPages, baseUrl) {
+    var paginationHtml = '';
+    if (totalPages > 1) {
+        paginationHtml += '<li><a href="javascript:void(0);" onclick="loadPage(1, \'' + baseUrl + '\')">First</a></li>';
+        for (var i = 1; i <= totalPages; i++) {
+            paginationHtml += '<li ' + (currentPage === i ? 'class="active"' : '') + '><a href="javascript:void(0);" onclick="loadPage(' + i + ', \'' + baseUrl + '\')">' + i + '</a></li>';
+        }
+        paginationHtml += '<li><a href="javascript:void(0);" onclick="loadPage(' + totalPages + ', \'' + baseUrl + '\')">Last</a></li>';
+    }
+    j('.pagination').html(paginationHtml);
+}
+
+function loadPage(page, baseUrl) {
+    window.location.href = baseUrl + '?page=' + page;
+}</script>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var totalPages = <?php echo $this->getTotalPages(); ?>;
+        var currentPage = <?php echo $this->getCurrentPage(); ?>;
+        var baseUrl = '<?php echo $this->getUrl('*/*/*'); ?>';
+        var modal = document.getElementById('create-filter-modal');
+        var ticketLink = document.querySelector('.create-filter-link');
+        var closeBtn = document.getElementById('closebtn');
+        updatePagination(currentPage, totalPages, baseUrl);
+        // var statusSelect = document.getElementById('status');
+    
+        ticketLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            modal.style.display = 'block';
+        });
+
+        // Close modal
+        closeBtn.addEventListener('click', function () {
+            // console.log(111);
+            modal.style.display = 'none';
+        });
+        
+        // Close modal if clicked outside of it
+        window.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // statusSelect.addEventListener('change', function () {
+        //     var selectedOption = statusSelect.options[statusSelect.selectedIndex];
+        //     statusSelect.style.backgroundColor = selectedOption.style.backgroundColor;
+        // });
+
+        // // Sync CKEditor content to hidden textarea
+        // document.getElementById('ticket-form').addEventListener('submit', function () {
+        //     document.getElementById('description').value = descriptionEditor.getData();
+        // });
+    });
+</script>
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        overflow: auto;
+    }
+
+    .modal-content {
+        background-color: #ffffff;
+        margin: 10% auto;
+        text-align: left;
+        padding: 20px 30px;
+        border-radius: 8px;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 500px;
+        position: relative;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #888;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+    }
+
+    .modal form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal form div {
+        margin-bottom: 15px;
+    }
+
+    .modal label {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .modal input[type="text"],
+    .modal input[type="number"],
+    .modal textarea,
+    .modal select {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        resize: vertical;
+        transition: border-color 0.3s ease;
+    }
+
+    .modal input[type="text"]:focus,
+    .modal input[type="number"]:focus,
+    .modal textarea:focus,
+    .modal select:focus {
+        border-color: #4CAF50;
+    }
+
+    .modal input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .modal input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    .modal textarea {
+        height: 100px;
+    }
+
+    @media (max-width: 600px) {
+        .modal-content {
+            width: 90%;
+            padding: 15px;
+        }
+
+        .modal input[type="text"],
+        .modal input[type="number"],
+        .modal textarea,
+        .modal select {
+            width: calc(100% - 12px);
+        }
+    }
+</style>

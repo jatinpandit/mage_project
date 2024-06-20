@@ -1,1 +1,364 @@
-111 46546
+<?php
+$ticket = $this->getTicket();
+$users = $this->getUsers()->getCollection();
+$status = $this->getStatus();
+$comment = $this->getComment($ticket->getId());
+// print_r($comment->getData());
+?>
+
+<div class="ticket-view">
+    <h1>Ticket View</h1>
+    <div class="ticket-details">
+        <!-- <p><strong>Ticket ID:</strong> <?php //echo $this->escapeHtml($ticket->getTicketId()); ?></p> -->
+        <p><strong>Title:</strong> <?php echo $this->escapeHtml($ticket->getTitle()); ?></p>
+        <p><strong>Description:</strong> <?php echo ($ticket->getDescription()); ?></p>
+        <p><strong>Priority:</strong> <?php echo $this->escapeHtml($ticket->getPriority()); ?></p>
+
+        <div class="form-group">
+            <p><strong>Assigned By:</strong></p>
+            <!-- <strong><label for="assigned_by"><?php //echo $this->__('Assigned By') ?></label></strong> -->
+            <select class="dropdown" name="assigned_by" id="assigned_by" required>
+                <option value="">--Select--</option>
+                <?php foreach ($users as $_u): ?>
+                    <option value="<?php echo $_u->getId(); ?>" <?php echo $ticket->getAssignedBy() == $_u->getId() ? 'selected' : ''; ?>>
+                        <?php echo ucfirst($this->escapeHtml($_u->getUsername())); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <p><strong>Assigned To:</strong></p>
+            <!-- <strong><label for="assigned_to"><?php //echo $this->__('Assigned To') ?></label></strong> -->
+            <select class="dropdown " name="assigned_to" id="assigned_to" required>
+                <option value="">--Select--</option>
+                <?php foreach ($users as $_u): ?>
+                    <option value="<?php echo $_u->getId(); ?>" <?php echo $ticket->getAssignedTo() == $_u->getId() ? 'selected' : ''; ?>>
+                        <?php echo ucfirst($this->escapeHtml($_u->getUsername())); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <p><strong>Status:</strong></p>
+            <!-- <strong><label for="status"><?php //echo $this->__('Status') ?></label></strong> -->
+            <select class="dropdown" name="status" id="status" required>
+                <option value="">--Select--</option>
+                <?php foreach ($status as $s): ?>
+                    <option value="<?php echo $s->getId(); ?>" style="background-color:<?php echo $s->getColourCode() ?>"
+                        <?php echo $ticket->getStatus() == $s->getCode() ? 'selected' : $ticket->getStatus(); ?>>
+                        <?php echo $this->escapeHtml($s->getLabel()); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <p><strong>Created At:</strong> <?php echo $this->escapeHtml($ticket->getCreatedAt()); ?></p>
+        <p><strong>Updated At:</strong> <?php echo $this->escapeHtml($ticket->getUpdatedAt()); ?></p>
+    </div>
+</div>
+
+<!-- <div class="comment-view">
+    <h1>Post Comment</h1>
+    <div class="comment-form">
+        <form id="comment-form" action="<?php //echo Mage::helper('adminhtml')->getUrl('adminhtml/ticket/saveComment') ?>"
+            method="POST">
+            <?php //echo $this->getBlockHtml('formkey') ?>
+            <input type="hidden" id="ticket_id" name="ticket_id" value="<?php //echo $ticket->getId() ?>">
+
+            <label for="comment"><?php //echo $this->__('Comment') ?></label>
+            <div id="comment"></div>
+            <textarea name="comment" id="comment"></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div> -->
+
+
+<div class="container" id="mainContainer">
+    <div class="textbox-container">
+        <textarea name="comment" id="comment" placeholder="Enter Comment"></textarea>
+        <button>Save</button>
+        <button onclick="addChild(this)">Reply</button>
+    </div>
+</div>
+
+
+<script>
+   function addChild(button) {
+    // Create a new container for the child textarea and button
+    const childContainer = document.createElement('div');
+    childContainer.className = 'textbox-container';
+
+    // Create the child textarea
+    const childTextarea = document.createElement('textarea');
+    childTextarea.placeholder = 'Enter text';
+
+    // Create the child button
+    // const childButton = document.createElement('button');
+    // childButton.textContent = 'Reply';
+    // childButton.onclick = function() { addChild(childButton); };
+
+    // Append the textarea and button to the child container
+    childContainer.appendChild(childTextarea);
+    // childContainer.appendChild(childButton);
+
+    // Find the parent container where the button was clicked
+    const parentWrapper = button.parentElement.querySelector('.child-container');
+    
+    if (!parentWrapper) {
+        // Create and append the child container if it doesn't exist
+        const newParentContainer = document.createElement('div');
+        newParentContainer.className = 'child-container';
+        button.parentElement.appendChild(newParentContainer);
+        newParentContainer.appendChild(childContainer);
+    } else {
+        // Append to the existing child container
+        parentWrapper.appendChild(childContainer);
+    }
+}
+
+// Function to add a new parent container
+// function addParent() {
+//     const parentContainer = document.createElement('div');
+//     parentContainer.className = 'textbox-container';
+
+//     const parentTextarea = document.createElement('textarea');
+//     parentTextarea.placeholder = 'Enter text';
+
+//     const parentButton = document.createElement('button');
+//     parentButton.textContent = 'Add Child';
+//     parentButton.onclick = function() { addChild(parentButton); };
+
+//     parentContainer.appendChild(parentTextarea);
+//     parentContainer.appendChild(parentButton); 
+
+//     document.body.appendChild(parentContainer);
+// }
+</script>
+
+
+
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js">
+    CKEDITOR.replace('comment', {
+        height: 150
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var statusSelect = document.getElementById('status');
+
+        statusSelect.addEventListener('change', function () {
+            var selectedOption = statusSelect.options[statusSelect.selectedIndex];
+            statusSelect.style.backgroundColor = selectedOption.style.backgroundColor;
+        });
+    });
+</script>
+
+<style>
+  /* General styling for all textareas and buttons */
+  /* General styling for containers */
+.textbox-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.textbox-container textarea {
+    width: 100%;
+    height: 100px;
+    resize: vertical;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.textbox-container button {
+    align-self: flex-start;
+    padding: 10px 20px;
+    /* background-color: #007bff; */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+/* Styling for the child containers */
+.child-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    border-left: 2px dashed #ccc;
+    padding-left: 20px;
+}
+
+.child-container > .textbox-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+/* Specific styling for buttons in the child container */
+.child-container > .textbox-container button {
+    margin-top: 5px;
+    align-self: flex-start;
+    padding: 10px 20px;
+    /* background-color: #007bff; */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* transition: background-color 0.3s ease; */
+}
+
+
+
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        /* padding: 20px; */
+    }
+
+    .ticket-view,
+    .comment-view,
+    .comment-show {
+        background: #fff;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    .ticket-view h1,
+    .comment-view h1,
+    .comment-show h2 {
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    .ticket-details p {
+        margin: 10px 0;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .ticket-details p strong {
+        font-weight: bold;
+        color: #555;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-group select,
+    .comment-form textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .form-group select:focus,
+    .comment-form textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    .comment-form textarea {
+        height: 150px;
+        resize: vertical;
+    }
+
+    .comment-form button {
+        /* background-color: #007bff; */
+        /* color: #fff; */
+        padding: 10px 20px;
+        font-size: 14px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .comment-form button:hover {
+        /* background-color: #0056b3; */
+    }
+
+    .comment-show table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .comment-show table thead {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .comment-show table th,
+    .comment-show table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .comment-show table th {
+        font-weight: bold;
+    }
+
+    .comment-show table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .comment-show table tbody tr:nth-child(odd) {
+        background-color: #fafafa;
+    }
+</style>
+
+<script type="text/javascript">
+    j = jQuery.noConflict();
+    j("body").on("change", ".dropdown", function (e) {
+        e.preventDefault();
+        // var id = j(this).data('id');
+        var id = <?php echo $ticket->getId() ?>;
+        var column = j(this).attr('name');
+        var value = j(this).val();
+        var updateUrl = '<?php echo $this->getUrl('*/*/saveDropdown') ?>';
+        console.log(id);
+
+        new Ajax.Request(updateUrl, {
+            method: "post",
+            parameters: { ticket_id: id, field: column, val: value },
+            onSuccess: function (response) {
+                console.log(response);
+            },
+        });
+    });
+</script>
